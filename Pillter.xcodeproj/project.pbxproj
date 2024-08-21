@@ -113,34 +113,82 @@
 		193FC4652C75B4D300C03E29 /* Pillter */ = {
 			isa = PBXGroup;
 			children = (
-				19F6DE5B2C75BC2A0074B6A7 /* UIColor.swift */,
 				193FC4662C75B4D300C03E29 /* AppDelegate.swift */,
 				193FC4682C75B4D300C03E29 /* SceneDelegate.swift */,
-				19F6DE4E2C75BAE20074B6A7 /* CustomTabBarController.swift */,
-				19F6DE512C75BBB30074B6A7 /* HomeController.swift */,
-				195362BF2C7653F00092BFB9 /* PillInfoViewController.swift */,
-				19F6DE532C75BBD40074B6A7 /* AlarmController.swift */,
-				19F6DE552C75BBE30074B6A7 /* MyPageController.swift */,
-				19F6DE572C75BBF60074B6A7 /* DateCollectionViewCell.swift */,
-				19F6DE592C75BC180074B6A7 /* AddMedViewControllerDelegate.swift */,
-				19F6DE5F2C75BCD90074B6A7 /* LocationController.swift */,
-				19F6DE5D2C75BC3E0074B6A7 /* ChatFinalController.swift */,
-				19F6DE612C75BCEC0074B6A7 /* ChatBotController.swift */,
-				19F6DE632C75BD300074B6A7 /* ChatExplainController.swift */,
-				19F6DE652C75BD470074B6A7 /* APIKey.swift */,
-				19F6DE672C75BD580074B6A7 /* Chat.swift */,
-				19F6DE692C75BD620074B6A7 /* ChatBubble.swift */,
-				19F6DE6B2C75BD700074B6A7 /* ChatBubbleShape.swift */,
-				19F6DE6D2C75BD7E0074B6A7 /* ChatService.swift */,
-				19F6DE6F2C75BD850074B6A7 /* ChatView.swift */,
-				19F6DE772C75BEF20074B6A7 /* GenerativeAI-Info.plist */,
-				19F6DE792C75BEFC0074B6A7 /* GoogleService-Info.plist */,
+				195362C62C765DD40092BFB9 /* Custom */,
+				195362C12C765D050092BFB9 /* Home */,
+				195362C22C765D150092BFB9 /* Location */,
+				195362C32C765D230092BFB9 /* Chat */,
+				195362C42C765D600092BFB9 /* Alarm */,
+				195362C52C765DAC0092BFB9 /* MyPage */,
 				193FC46C2C75B4D300C03E29 /* Main.storyboard */,
 				19F6DE4C2C75BA2D0074B6A7 /* Launch Screen.storyboard */,
 				193FC46F2C75B4D400C03E29 /* Assets.xcassets */,
 				193FC4742C75B4D400C03E29 /* Info.plist */,
 			);
 			path = Pillter;
+			sourceTree = "<group>";
+		};
+		195362C12C765D050092BFB9 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				19F6DE512C75BBB30074B6A7 /* HomeController.swift */,
+				195362BF2C7653F00092BFB9 /* PillInfoViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		195362C22C765D150092BFB9 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				19F6DE5F2C75BCD90074B6A7 /* LocationController.swift */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
+		195362C32C765D230092BFB9 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				19F6DE672C75BD580074B6A7 /* Chat.swift */,
+				19F6DE692C75BD620074B6A7 /* ChatBubble.swift */,
+				19F6DE6B2C75BD700074B6A7 /* ChatBubbleShape.swift */,
+				19F6DE6D2C75BD7E0074B6A7 /* ChatService.swift */,
+				19F6DE6F2C75BD850074B6A7 /* ChatView.swift */,
+				19F6DE5D2C75BC3E0074B6A7 /* ChatFinalController.swift */,
+				19F6DE612C75BCEC0074B6A7 /* ChatBotController.swift */,
+				19F6DE632C75BD300074B6A7 /* ChatExplainController.swift */,
+				19F6DE652C75BD470074B6A7 /* APIKey.swift */,
+				19F6DE772C75BEF20074B6A7 /* GenerativeAI-Info.plist */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		195362C42C765D600092BFB9 /* Alarm */ = {
+			isa = PBXGroup;
+			children = (
+				19F6DE532C75BBD40074B6A7 /* AlarmController.swift */,
+				19F6DE572C75BBF60074B6A7 /* DateCollectionViewCell.swift */,
+				19F6DE592C75BC180074B6A7 /* AddMedViewControllerDelegate.swift */,
+				19F6DE792C75BEFC0074B6A7 /* GoogleService-Info.plist */,
+			);
+			path = Alarm;
+			sourceTree = "<group>";
+		};
+		195362C52C765DAC0092BFB9 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				19F6DE552C75BBE30074B6A7 /* MyPageController.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
+		195362C62C765DD40092BFB9 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				19F6DE4E2C75BAE20074B6A7 /* CustomTabBarController.swift */,
+				19F6DE5B2C75BC2A0074B6A7 /* UIColor.swift */,
+			);
+			path = Custom;
 			sourceTree = "<group>";
 		};
 		19D83E0E2C75B79B0034BE1F /* Frameworks */ = {
