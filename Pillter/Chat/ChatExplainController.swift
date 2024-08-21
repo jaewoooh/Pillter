@@ -21,7 +21,7 @@ class ChatExplainController: UIViewController, UITextFieldDelegate {
     {
         let button = UIButton(type: .system)
         button.setTitle("배 아플 때 무슨 약 먹어야 돼?", for: .normal)
-        button.backgroundColor = .lightGray
+        button.backgroundColor = UIColor(hexCode: "#F4F4F4")
         button.tintColor = .black
         button.titleLabel?.font = UIFont.systemFont(ofSize: 13, weight: .thin)
         button.layer.cornerRadius = 20
@@ -35,7 +35,7 @@ class ChatExplainController: UIViewController, UITextFieldDelegate {
     {
         let button = UIButton(type: .system)
         button.setTitle("타이레놀 부작용 알려줘!", for: .normal)
-        button.backgroundColor = .lightGray
+        button.backgroundColor = UIColor(hexCode: "#F4F4F4")
         button.tintColor = .black
         button.titleLabel?.font = UIFont.systemFont(ofSize: 13, weight: .thin)
         button.layer.cornerRadius = 20
@@ -49,7 +49,7 @@ class ChatExplainController: UIViewController, UITextFieldDelegate {
     {
         let button = UIButton(type: .system)
         button.setTitle("기침이 계속 나는데 무슨 약을 먹어야 돼?", for: .normal)
-        button.backgroundColor = .lightGray
+        button.backgroundColor = UIColor(hexCode: "#F4F4F4")
         button.tintColor = .black
         button.titleLabel?.font = UIFont.systemFont(ofSize: 13, weight: .thin)
         button.layer.cornerRadius = 20
@@ -73,7 +73,7 @@ class ChatExplainController: UIViewController, UITextFieldDelegate {
     {
         let button = UIButton(type: .system)
         button.setTitle("경구 투여가 무슨 뜻이야?", for: .normal)
-        button.backgroundColor = .lightGray
+        button.backgroundColor = UIColor(hexCode: "#F4F4F4")
         button.tintColor = .black
         button.titleLabel?.font = UIFont.systemFont(ofSize: 13, weight: .thin)
         button.layer.cornerRadius = 20
@@ -87,7 +87,7 @@ class ChatExplainController: UIViewController, UITextFieldDelegate {
     {
         let button = UIButton(type: .system)
         button.setTitle("장기 연용은 무슨 뜻이야?", for: .normal)
-        button.backgroundColor = .lightGray
+        button.backgroundColor = UIColor(hexCode: "#F4F4F4")
         button.tintColor = .black
         button.titleLabel?.font = UIFont.systemFont(ofSize: 13, weight: .thin)
         button.layer.cornerRadius = 20
@@ -101,7 +101,7 @@ class ChatExplainController: UIViewController, UITextFieldDelegate {
     {
         let button = UIButton(type: .system)
         button.setTitle("수진자와 수검자 뜻 알려줘!", for: .normal)
-        button.backgroundColor = .lightGray
+        button.backgroundColor = UIColor(hexCode: "#F4F4F4")
         button.tintColor = .black
         button.titleLabel?.font = UIFont.systemFont(ofSize: 13, weight: .thin)
         button.layer.cornerRadius = 20
@@ -127,8 +127,8 @@ class ChatExplainController: UIViewController, UITextFieldDelegate {
     // 하단 텍스트 입력 필드
     let chatInputField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Hello chaPill !"
-        textField.font = UIFont.systemFont(ofSize: 20)
+        textField.placeholder = "Hello ChatPill!"
+        textField.font = UIFont.systemFont(ofSize: 15)
         textField.tintColor = .black
         textField.borderStyle = .none
         textField.layer.cornerRadius = 15
@@ -279,8 +279,8 @@ class ChatExplainController: UIViewController, UITextFieldDelegate {
             // 전체 스택뷰 제약 조건
             mainStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             mainStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -70),
+            mainStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50), // 상단에서 50포인트 아래로 조정
+            mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -73), // 하단에서 더 아래로 내림
             
             // 상단 설명 스택뷰 제약 조건
             upStackView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor),
@@ -332,6 +332,7 @@ class ChatExplainController: UIViewController, UITextFieldDelegate {
             chatInputField.trailingAnchor.constraint(equalTo: sendButton.leadingAnchor, constant: -10),
         ])
     }
+
 
 
 

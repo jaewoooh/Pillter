@@ -24,7 +24,7 @@ struct ChatView: View {
             Image(.chatPill)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 120)
+                .frame(width: 80)
             
             //메시지 리스트.
             ScrollViewReader(content: { proxy in
@@ -85,6 +85,7 @@ struct ChatView: View {
                         .padding(.horizontal, 10)
                         .foregroundStyle(.black)
                         .cornerRadius(15)
+             
                     
                     Button(action: sendMessage, label: {
                         Image(systemName: "paperplane.fill")
@@ -163,7 +164,7 @@ struct ChatView: View {
             
             ChatBubble(direction: message.role == .model ? .left : .right) {
                 Text(message.message)
-                    .font(.body)
+                    .font(.system(size: 14, weight: .regular, design: .rounded))
                     .padding(.all, 10)
                     .foregroundStyle(.white)
                     .background(message.role == .model ? Color.gray : Color.blue)

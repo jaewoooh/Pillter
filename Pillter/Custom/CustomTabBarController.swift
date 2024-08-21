@@ -2,7 +2,7 @@ import UIKit
 
 class CustomTabBarController: UITabBarController {
 
-    private var selectedItemIndex: Int = 0
+    private var selectedItemIndex: Int = 2
     private let selectedColor = UIColor(hexCode: "2260FF") // 선택된 아이템의 색상
     private let unselectedColor = UIColor.black // 비선택 아이템의 색상 (검정색)
 
@@ -20,6 +20,8 @@ class CustomTabBarController: UITabBarController {
 
         // 초기화할 때 탭바 아이템 색상 업데이트
         updateTabBarItemColors()
+        
+        selectedIndex = 2
     }
 
     func makeTabBarTransparent() {
@@ -50,7 +52,7 @@ class CustomTabBarController: UITabBarController {
         mypage.view.backgroundColor = .white
         mypage.tabBarItem = UITabBarItem(title: "", image: UIImage(systemName: "calendar"), tag: 4)
 
-        viewControllers = [home, location, chatbot, alarm, mypage]
+        viewControllers = [location, chatbot, home, alarm, mypage]
     }
 
     func designCustomTabBar() {
