@@ -51,8 +51,38 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
         layoutUI()
         
         // 네비게이션 바 타이틀 설정
-        title = "Home"
+        setupNavigationBarTitleView()
     }
+    
+    // 네비게이션 바 아이콘 3D작업
+    private func setupNavigationBarTitleView() {
+            // "Home" 텍스트 설정
+            let titleLabel = UILabel()
+            titleLabel.text = "Home"
+            titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+            titleLabel.textColor = UIColor.black // 텍스트 색상 설정
+            
+            // GIF 이미지 설정
+            let animatedImageView = UIImageView()
+            if let gifImage = UIImage.gif(name: "Home_anicon") {
+                animatedImageView.image = gifImage
+                animatedImageView.contentMode = .scaleAspectFit
+                
+                // 이미지의 크기 설정
+                animatedImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+                animatedImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+            }
+            
+            // 스택 뷰 설정 (Label과 ImageView를 수평으로 배치)
+            let stackView = UIStackView(arrangedSubviews: [titleLabel, animatedImageView])
+            stackView.axis = .horizontal
+            stackView.spacing = 8 // 텍스트와 이미지 간의 간격 설정
+            stackView.alignment = .center
+            
+            // 스택 뷰를 네비게이션 바의 타이틀 뷰로 설정
+            self.navigationItem.titleView = stackView
+        }
+
 
     // UI 설정
     private func setupUI() {
