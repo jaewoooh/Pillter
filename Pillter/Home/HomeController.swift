@@ -61,7 +61,7 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
             titleLabel.text = "Home"
             titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
             titleLabel.textColor = UIColor.black // 텍스트 색상 설정
-            
+        
             // GIF 이미지 설정
             let animatedImageView = UIImageView()
             if let gifImage = UIImage.gif(name: "Home_anicon") {
@@ -109,7 +109,13 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         // 제목 레이블 설정
         titleLabel.text = "Pillter"
-        titleLabel.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        titleLabel.font = UIFont(name: "ConcertOne-Regular", size: 40)
+//        음영효과 코드
+//        titleLabel.layer.shadowColor = UIColor.black.cgColor
+//        titleLabel.layer.shadowOffset = CGSize(width: 1.5, height: 1.5)
+//        titleLabel.layer.shadowOpacity = 0.3
+//        titleLabel.layer.shadowRadius = 1
+
         titleLabel.textColor = UIColor(hexCode: "#22212E")
         titleLabel.textAlignment = .left
 
@@ -149,7 +155,7 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
         step1Label.text = "알약 타입을 선택해주세요."
         step1Label.textColor = UIColor(hexCode: "#00459C")
-        step1Label.font = UIFont(name: "Source Sans Pro", size: 18)
+        step1Label.font = UIFont(name: "SOYO Maple Bold", size: 15)
         step1Label.textAlignment = .left
 
         step1StackView.axis = .horizontal
@@ -203,7 +209,7 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
         step2Label.text = "식별 정보를 입력해주세요."
         step2Label.textColor = UIColor(hexCode: "#00459C")
-        step2Label.font = UIFont(name: "Source Sans Pro", size: 18)
+        step2Label.font = UIFont(name: "SOYO Maple Bold", size: 15)
         step2Label.textAlignment = .left
 
         step2StackView.axis = .horizontal
@@ -218,7 +224,7 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
         // infoLabel 설정
         infoLabel.text = "식별 정보를 입력해주시면 정확도가 향상됩니다."
-        infoLabel.font = UIFont(name: "SourceSansPro-Regular", size: 8)
+        infoLabel.font = UIFont(name: "SOYO Maple Bold", size: 12)
         infoLabel.textColor = UIColor(hexCode: "#777777")
         infoLabel.numberOfLines = 1
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -249,7 +255,7 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
         step3Label.text = "촬영하기"
         step3Label.textColor = UIColor(hexCode: "#00459C")
-        step3Label.font = UIFont(name: "Source Sans Pro", size: 18)
+        step3Label.font = UIFont(name: "SOYO Maple Bold", size: 15)
         step3Label.textAlignment = .left
 
         step3StackView.axis = .horizontal
@@ -278,7 +284,7 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
         accordionButton.setTitle("식별 정보", for: .normal)
         accordionButton.setTitleColor(.black, for: .normal)
         accordionButton.contentHorizontalAlignment = .left
-        accordionButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        accordionButton.titleLabel?.font = UIFont(name: "SOYO Maple Bold", size: 15)
         accordionButton.addTarget(self, action: #selector(toggleAccordion), for: .touchUpInside)
         
         frontLabel.text = "식별 정보 앞"

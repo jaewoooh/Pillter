@@ -17,6 +17,9 @@
 		195362CC2C7699600092BFB9 /* Home_anicon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 195362CB2C7699600092BFB9 /* Home_anicon.gif */; };
 		195362CE2C769A550092BFB9 /* Alarm_anicon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 195362CD2C769A550092BFB9 /* Alarm_anicon.gif */; };
 		195362D02C769A9C0092BFB9 /* Pill_anicon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 195362CF2C769A9C0092BFB9 /* Pill_anicon.gif */; };
+		195362D52C76A3300092BFB9 /* SOYO Maple Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 195362D42C76A3300092BFB9 /* SOYO Maple Bold.otf */; };
+		195362D72C76A3380092BFB9 /* Cafe24Decobox.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 195362D62C76A3380092BFB9 /* Cafe24Decobox.ttf */; };
+		195362D92C76A61A0092BFB9 /* ConcertOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 195362D82C76A6190092BFB9 /* ConcertOne-Regular.ttf */; };
 		19D83E102C75B79B0034BE1F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E0F2C75B79B0034BE1F /* FirebaseAnalytics */; };
 		19D83E122C75B79E0034BE1F /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E112C75B79E0034BE1F /* FirebaseAnalyticsOnDeviceConversion */; };
 		19D83E142C75B7A30034BE1F /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E132C75B7A30034BE1F /* FirebaseAppCheck */; };
@@ -59,6 +62,9 @@
 		195362CB2C7699600092BFB9 /* Home_anicon.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Home_anicon.gif; sourceTree = "<group>"; };
 		195362CD2C769A550092BFB9 /* Alarm_anicon.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Alarm_anicon.gif; sourceTree = "<group>"; };
 		195362CF2C769A9C0092BFB9 /* Pill_anicon.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = Pill_anicon.gif; sourceTree = "<group>"; };
+		195362D42C76A3300092BFB9 /* SOYO Maple Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SOYO Maple Bold.otf"; sourceTree = "<group>"; };
+		195362D62C76A3380092BFB9 /* Cafe24Decobox.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cafe24Decobox.ttf; sourceTree = "<group>"; };
+		195362D82C76A6190092BFB9 /* ConcertOne-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ConcertOne-Regular.ttf"; sourceTree = "<group>"; };
 		19F6DE4C2C75BA2D0074B6A7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		19F6DE4E2C75BAE20074B6A7 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		19F6DE512C75BBB30074B6A7 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -196,11 +202,22 @@
 		195362C62C765DD40092BFB9 /* Custom */ = {
 			isa = PBXGroup;
 			children = (
+				195362D22C769FEF0092BFB9 /* Font */,
 				19F6DE4E2C75BAE20074B6A7 /* CustomTabBarController.swift */,
 				19F6DE5B2C75BC2A0074B6A7 /* UIColor.swift */,
 				195362C92C7698F80092BFB9 /* UIImage+GIF.swift */,
 			);
 			path = Custom;
+			sourceTree = "<group>";
+		};
+		195362D22C769FEF0092BFB9 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				195362D42C76A3300092BFB9 /* SOYO Maple Bold.otf */,
+				195362D62C76A3380092BFB9 /* Cafe24Decobox.ttf */,
+				195362D82C76A6190092BFB9 /* ConcertOne-Regular.ttf */,
+			);
+			path = Font;
 			sourceTree = "<group>";
 		};
 		19D83E0E2C75B79B0034BE1F /* Frameworks */ = {
@@ -283,7 +300,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				195362D72C76A3380092BFB9 /* Cafe24Decobox.ttf in Resources */,
 				19F6DE4D2C75BA2D0074B6A7 /* Launch Screen.storyboard in Resources */,
+				195362D52C76A3300092BFB9 /* SOYO Maple Bold.otf in Resources */,
 				195362D02C769A9C0092BFB9 /* Pill_anicon.gif in Resources */,
 				193FC4702C75B4D400C03E29 /* Assets.xcassets in Resources */,
 				195362CE2C769A550092BFB9 /* Alarm_anicon.gif in Resources */,
@@ -291,6 +310,7 @@
 				19F6DE782C75BEF20074B6A7 /* GenerativeAI-Info.plist in Resources */,
 				195362CC2C7699600092BFB9 /* Home_anicon.gif in Resources */,
 				193FC46E2C75B4D300C03E29 /* Base in Resources */,
+				195362D92C76A61A0092BFB9 /* ConcertOne-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
