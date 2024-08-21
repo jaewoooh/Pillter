@@ -1,26 +1,19 @@
 //
 //  HomeController.swift
-//  pillter
+//  Pillter
 //
-//  Created by 오재우 on 7/23/24.
+//  Created by 오재우 on 8/21/24.
 //
 
 import UIKit
 
-
-
-
-
 class HomeController: UIViewController {
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
- 
+
         // Do any additional setup after loading the view.
     }
-    
-    
-
     
 
     /*
