@@ -188,7 +188,40 @@ class AlarmController: UIViewController {
                 print("알림 권한 거부")
             }
         }
+        
+        // 네비게이션바 타이틀 애니메이션 효과 추가
+        setupNavigationBarTitleView()
     }
+    
+    //네비게이션바 타이틀 애니메이션 효과 기능 함수
+    private func setupNavigationBarTitleView() {
+        // "알림" 텍스트 설정
+        let titleLabel = UILabel()
+        titleLabel.text = "My Pill"
+        titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        titleLabel.textColor = UIColor.black // 텍스트 색상 설정
+        
+        // GIF 이미지 설정
+        let animatedImageView = UIImageView()
+        if let gifImage = UIImage.gif(name: "Alarm_anicon") {
+            animatedImageView.image = gifImage
+            animatedImageView.contentMode = .scaleAspectFit
+            
+            // 이미지의 크기 설정
+            animatedImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+            animatedImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        }
+        
+        // 스택 뷰 설정 (Label과 ImageView를 수평으로 배치)
+        let stackView = UIStackView(arrangedSubviews: [titleLabel, animatedImageView])
+        stackView.axis = .horizontal
+        stackView.spacing = 8 // 텍스트와 이미지 간의 간격 설정
+        stackView.alignment = .center
+        
+        // 스택 뷰를 네비게이션 바의 타이틀 뷰로 설정
+        self.navigationItem.titleView = stackView
+    }
+
 
     
     // 뷰를 서브뷰로 추가
