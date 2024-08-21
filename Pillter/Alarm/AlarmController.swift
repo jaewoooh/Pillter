@@ -77,7 +77,7 @@ class AlarmController: UIViewController {
     // 약 복용 현황을 보여주는 원형 뷰
     let medCircleView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(hex: "#EFFAFF")
+        view.backgroundColor = UIColor(hex: "#F4F9FD")
         view.layer.cornerRadius = 120
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
