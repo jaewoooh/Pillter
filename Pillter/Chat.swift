@@ -1,29 +1,20 @@
-//
+
 //  Chat.swift
-//  Pillter
+//  solo
 //
-//  Created by 오재우 on 8/21/24.
+//  Created by 이상원 on 8/1/24.
 //
 
-import UIKit
+import Foundation
 
-class Chat: UIViewController {
+enum ChatRole {
+    case user
+    case model
+}
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+struct ChatMessage: Identifiable, Equatable {
+    let id = UUID().uuidString
+    var role: ChatRole
+    var message: String
+    var images: [Data]?
 }

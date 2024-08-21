@@ -1,22 +1,43 @@
 //
 //  SceneDelegate.swift
-//  Pillter
+//  pillter
 //
-//  Created by 오재우 on 8/21/24.
+//  Created by 오재우 on 7/21/24.
 //
 
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
+    
     var window: UIWindow?
-
-
+    
+    
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        
+        // UIWindow 객체 생성 및 windowScene 할당
+        window = UIWindow(windowScene: windowScene)
+        
+        // LaunchScreen을 위한 초기 뷰 컨트롤러 설정
+        let launchScreenVC = UIStoryboard(name: "Launch Screen", bundle: nil).instantiateInitialViewController()!
+        window?.rootViewController = launchScreenVC
+        window?.makeKeyAndVisible()
+        
+        // 1초 지연 후 메인 화면으로 전환
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.showMainScreen()
+        }
+    }
+
+    func showMainScreen() {
+        // CustomTabBarController 인스턴스 생성
+        let tabBarController = CustomTabBarController()
+        
+        // window의 rootViewController로 설정
+        window?.rootViewController = tabBarController
+        
+        // window를 화면에 표시
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

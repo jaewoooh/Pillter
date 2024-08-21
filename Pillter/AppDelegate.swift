@@ -1,8 +1,8 @@
 //
 //  AppDelegate.swift
-//  Pillter
+//  pillter
 //
-//  Created by 오재우 on 8/21/24.
+//  Created by 오재우 on 7/21/24.
 //
 
 import UIKit
@@ -14,7 +14,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
         return true
+    }
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        // 세로 모드만 지원
+        return .portrait
     }
 
     // MARK: UISceneSession Lifecycle

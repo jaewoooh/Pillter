@@ -1,8 +1,8 @@
 //
 //  ChatFinalController.swift
-//  Pillter
+//  pillter
 //
-//  Created by 오재우 on 8/21/24.
+//  Created by 이상원 on 7/25/24.
 //
 
 import UIKit
@@ -12,7 +12,8 @@ class ChatFinalController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .white
+        title = "Chat Explain"
     }
     
 

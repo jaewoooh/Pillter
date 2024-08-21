@@ -1,29 +1,35 @@
-//
+
 //  ChatBubble.swift
-//  Pillter
+//  solo
 //
-//  Created by 오재우 on 8/21/24.
+//  Created by 이상원 on 8/1/24.
 //
 
-import UIKit
+import Foundation
+import SwiftUI
 
-class ChatBubble: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+struct ChatBubble<Content>: View where Content: View {
+    
+    let direction: ChatBubbleShape.Direction // #MARK: 채팅 방향(왼, 오)
+    let content: () -> Content
+    
+    // #MARK: 초기화
+    init(direction: ChatBubbleShape.Direction, @ViewBuilder content: @escaping () -> Content) {
+            self.content = content
+            self.direction = direction
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    var body: some View {
+        HStack {
+            if direction == .right {
+                Spacer()
+            }
+            content()
+                .clipShape(ChatBubbleShape(direction: direction))
+            if direction == .left {
+                Spacer()
+            }
+        }.padding([(direction == .left) ? .leading : .trailing, .top, .bottom], 5)
+        .padding((direction == .right) ? .leading : .trailing, 10)
     }
-    */
-
 }
