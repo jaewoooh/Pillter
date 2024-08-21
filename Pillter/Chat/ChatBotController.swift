@@ -37,22 +37,41 @@ class ChatBotController: UIViewController {
     }()
     
     // 계속하기 버튼
-    let continueBtn: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle(" 계속하기 -> ", for: .normal)
-        button.backgroundColor = .systemBlue
-        button.tintColor = .white
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        button.layer.cornerRadius = 25
-        button.clipsToBounds = true
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+      let continueBtn: UIButton = {
+          let button = UIButton(type: .system)
+          
+          // "대화하기" 텍스트 설정
+          let text = NSMutableAttributedString(string: " 대화하기 ", attributes: [
+              .font: UIFont.systemFont(ofSize: 18, weight: .bold),
+              .foregroundColor: UIColor.white
+          ])
+          
+          // arrowshape.forward 이미지 설정
+          let imageAttachment = NSTextAttachment()
+          imageAttachment.image = UIImage(systemName: "arrowshape.turn.up.right.fill")?.withTintColor(.white)
+          imageAttachment.bounds = CGRect(x: 40, y: -1, width: 16, height: 16)
+          let imageString = NSAttributedString(attachment: imageAttachment)
+          
+          // 텍스트와 이미지를 결합
+          text.append(imageString)
+          
+          // 버튼 타이틀로 설정
+          button.setAttributedTitle(text, for: .normal)
+          
+          // 버튼 스타일 설정
+          button.backgroundColor = .systemBlue
+          button.layer.cornerRadius = 25
+          button.clipsToBounds = true
+          button.translatesAutoresizingMaskIntoConstraints = false
+          
+          return button
+      }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         view.backgroundColor = .white
+
         
         // 스택뷰 생성 및 요소 추가
         let stackView = UIStackView(arrangedSubviews: [chatPillLabel, descriptionLabel, chatImage, continueBtn])
