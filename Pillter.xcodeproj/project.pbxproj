@@ -12,6 +12,7 @@
 		193FC46E2C75B4D300C03E29 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 193FC46D2C75B4D300C03E29 /* Base */; };
 		193FC4702C75B4D400C03E29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 193FC46F2C75B4D400C03E29 /* Assets.xcassets */; };
 		193FC48D2C75B57100C03E29 /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = 193FC48C2C75B57100C03E29 /* GoogleGenerativeAI */; };
+		195362C02C7653F00092BFB9 /* PillInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195362BF2C7653F00092BFB9 /* PillInfoViewController.swift */; };
 		19D83E102C75B79B0034BE1F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E0F2C75B79B0034BE1F /* FirebaseAnalytics */; };
 		19D83E122C75B79E0034BE1F /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E112C75B79E0034BE1F /* FirebaseAnalyticsOnDeviceConversion */; };
 		19D83E142C75B7A30034BE1F /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E132C75B7A30034BE1F /* FirebaseAppCheck */; };
@@ -49,6 +50,7 @@
 		193FC46D2C75B4D300C03E29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		193FC46F2C75B4D400C03E29 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		193FC4742C75B4D400C03E29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		195362BF2C7653F00092BFB9 /* PillInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillInfoViewController.swift; sourceTree = "<group>"; };
 		19F6DE4C2C75BA2D0074B6A7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		19F6DE4E2C75BAE20074B6A7 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		19F6DE512C75BBB30074B6A7 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 				193FC4682C75B4D300C03E29 /* SceneDelegate.swift */,
 				19F6DE4E2C75BAE20074B6A7 /* CustomTabBarController.swift */,
 				19F6DE512C75BBB30074B6A7 /* HomeController.swift */,
+				195362BF2C7653F00092BFB9 /* PillInfoViewController.swift */,
 				19F6DE532C75BBD40074B6A7 /* AlarmController.swift */,
 				19F6DE552C75BBE30074B6A7 /* MyPageController.swift */,
 				19F6DE572C75BBF60074B6A7 /* DateCollectionViewCell.swift */,
@@ -246,6 +249,7 @@
 				19F6DE5C2C75BC2A0074B6A7 /* UIColor.swift in Sources */,
 				19F6DE6A2C75BD620074B6A7 /* ChatBubble.swift in Sources */,
 				19F6DE622C75BCEC0074B6A7 /* ChatBotController.swift in Sources */,
+				195362C02C7653F00092BFB9 /* PillInfoViewController.swift in Sources */,
 				19F6DE662C75BD470074B6A7 /* APIKey.swift in Sources */,
 				19F6DE4F2C75BAE30074B6A7 /* CustomTabBarController.swift in Sources */,
 				193FC4692C75B4D300C03E29 /* SceneDelegate.swift in Sources */,

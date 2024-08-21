@@ -2,7 +2,7 @@ import UIKit
 
 class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    private var pillActionBtn = false //알약 타입을 눌러야만 다음으로 넘어가짐
+    private var pillActionBtn = false // 알약 타입을 눌러야만 다음으로 넘어가짐
     let scrollView = UIScrollView()
     let contentView = UIView()
     
@@ -49,6 +49,9 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
         super.viewDidLoad()
         setupUI()
         layoutUI()
+        
+        // 네비게이션 바 타이틀 설정
+        title = "Home"
     }
 
     // UI 설정
@@ -414,63 +417,77 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
 
     // 아코디언 버튼 클릭 이벤트 처리
-       @objc private func toggleAccordion() {
-           accordionView.isHidden.toggle()
-           let imageName = accordionView.isHidden ? "chevron.down" : "chevron.up"
-           accordionButton.setImage(UIImage(systemName: imageName), for: .normal)
-           accordionButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
-       }
+    @objc private func toggleAccordion() {
+        accordionView.isHidden.toggle()
+        let imageName = accordionView.isHidden ? "chevron.down" : "chevron.up"
+        accordionButton.setImage(UIImage(systemName: imageName), for: .normal)
+        accordionButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
+    }
 
-       // 생략 버튼 클릭 이벤트 처리
-       @objc private func skipButtonTapped() {
-           updateButtonStyles(isSaveButtonSelected: false)
-           updateStep2Style()
-           frontTextField.isEnabled = false
-           backTextField.isEnabled = false
-       }
+    // 생략 버튼 클릭 이벤트 처리
+    @objc private func skipButtonTapped() {
+        updateButtonStyles(isSaveButtonSelected: false)
+        updateStep2Style()
+        frontTextField.isEnabled = false
+        backTextField.isEnabled = false
+    }
 
-       // 저장 버튼 클릭 이벤트 처리
-       @objc private func saveButtonTapped() {
-           updateButtonStyles(isSaveButtonSelected: true)
-           updateStep2Style()
-           frontTextField.isEnabled = true
-           backTextField.isEnabled = true
-       }
+    // 저장 버튼 클릭 이벤트 처리
+    @objc private func saveButtonTapped() {
+        updateButtonStyles(isSaveButtonSelected: true)
+        updateStep2Style()
+        frontTextField.isEnabled = true
+        backTextField.isEnabled = true
+    }
 
-       // 촬영하기 버튼 클릭 이벤트 처리
+    // 촬영하기 버튼 클릭 이벤트 처리
     @objc private func shootButtonTapped() {
-            if pillActionBtn {
-                let imagePicker = UIImagePickerController()
-                imagePicker.delegate = self
-                imagePicker.sourceType = .camera
-                imagePicker.allowsEditing = false
-                present(imagePicker, animated: true, completion: nil)
-            }
+        if pillActionBtn {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .camera
+            imagePicker.allowsEditing = false
+            // 앨범 버튼 추가
+            let albumButton = UIBarButtonItem(title: "앨범", style: .plain, target: self, action: #selector(openPhotoLibrary))
+            imagePicker.navigationItem.rightBarButtonItem = albumButton
+            
+            present(imagePicker, animated: true, completion: nil)
+        }
         pillActionBtn = false
         updateStep3Style()
+    }
+
+    @objc private func openPhotoLibrary() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = false
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    // UIImagePickerControllerDelegate 메서드 구현
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        if let image = info[.originalImage] as? UIImage {
+            // 촬영된 또는 선택된 이미지를 다음 화면에 전달하고 화면 전환
+            let pillInfoVC = PillInfoViewController()
+            pillInfoVC.pillImage = image
+            navigationController?.pushViewController(pillInfoVC, animated: true)
         }
+    }
 
-       // UIImagePickerControllerDelegate 메서드 구현
-       func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-           picker.dismiss(animated: true, completion: nil)
-           
-           if let image = info[.originalImage] as? UIImage {
-               // 촬영한 이미지를 처리하는 로직을 추가하세요.
-               // 예를 들어, 이미지를 보여주는 뷰에 설정하거나 서버로 업로드할 수 있습니다.
-           }
-       }
-
-       func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-           picker.dismiss(animated: true, completion: nil)
-       }
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
 
     // UI 레이아웃 배치
     private func layoutUI() {
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 20),
+            titleLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 5),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
 
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
             descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             descriptionLabel.trailingAnchor.constraint(equalTo: pillImageView.leadingAnchor, constant: -10),
 
@@ -482,11 +499,11 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
             whiteContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             whiteContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             whiteContainerView.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 20),
-            whiteContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            whiteContainerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
 
             mainStackView.leadingAnchor.constraint(equalTo: whiteContainerView.leadingAnchor, constant: 20),
             mainStackView.trailingAnchor.constraint(equalTo: whiteContainerView.trailingAnchor, constant: -20),
-            mainStackView.topAnchor.constraint(equalTo: whiteContainerView.topAnchor, constant: 20),
+            mainStackView.topAnchor.constraint(equalTo: whiteContainerView.topAnchor, constant: 30),
             mainStackView.bottomAnchor.constraint(equalTo: whiteContainerView.bottomAnchor, constant: -60),
             
             shootButton.heightAnchor.constraint(equalToConstant: 50),
@@ -494,122 +511,124 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
             shootButton.leadingAnchor.constraint(equalTo: whiteContainerView.leadingAnchor, constant: 20),
             shootButton.trailingAnchor.constraint(equalTo: whiteContainerView.trailingAnchor, constant: -20)
         ])
+        // Step 2 간격 조정
+            mainStackView.setCustomSpacing(20, after: shapeSelectionView)  // 간격을 줄여 Step 2를 위로 올림
     }
 
     // 알약 모양 버튼 설정
-        private func setupShapeButtons() {
-            let shapes = [
-                ("원형", "CirclePill"),
-                ("타원형", "OvalPill"),
-                ("삼각형", "TrianglePill"),
-                ("사각형", "SquarePill"),
-                ("오각형", "PentagonPill"),
-                ("육각형", "HexagonPill")
-            ]
+    private func setupShapeButtons() {
+        let shapes = [
+            ("원형", "CirclePill"),
+            ("타원형", "OvalPill"),
+            ("삼각형", "TrianglePill"),
+            ("사각형", "SquarePill"),
+            ("오각형", "PentagonPill"),
+            ("육각형", "HexagonPill")
+        ]
 
-            let firstRowStackView = UIStackView()
-            firstRowStackView.axis = .horizontal
-            firstRowStackView.distribution = .fillEqually
-            firstRowStackView.spacing = 20
+        let firstRowStackView = UIStackView()
+        firstRowStackView.axis = .horizontal
+        firstRowStackView.distribution = .fillEqually
+        firstRowStackView.spacing = 20
 
-            let secondRowStackView = UIStackView()
-            secondRowStackView.axis = .horizontal
-            secondRowStackView.distribution = .fillEqually
-            secondRowStackView.spacing = 20
+        let secondRowStackView = UIStackView()
+        secondRowStackView.axis = .horizontal
+        secondRowStackView.distribution = .fillEqually
+        secondRowStackView.spacing = 20
 
-            for (index, shape) in shapes.enumerated() {
-                let button = createShapeButton(with: shape.0, imageName: shape.1)
+        for (index, shape) in shapes.enumerated() {
+            let button = createShapeButton(with: shape.0, imageName: shape.1)
 
-                if index < 3 {
-                    firstRowStackView.addArrangedSubview(button)
-                } else {
-                    secondRowStackView.addArrangedSubview(button)
-                }
-            }
-
-            shapeSelectionView.addArrangedSubview(firstRowStackView)
-            shapeSelectionView.addArrangedSubview(secondRowStackView)
-        }
-
-        // 알약 모양 버튼 생성
-        private func createShapeButton(with title: String, imageName: String) -> UIButton {
-            let button = UIButton(type: .custom)
-            button.translatesAutoresizingMaskIntoConstraints = false
-            button.widthAnchor.constraint(equalToConstant: 104.32).isActive = true
-            button.heightAnchor.constraint(equalToConstant: 75.067).isActive = true
-            button.layer.cornerRadius = 25
-            button.layer.borderWidth = 1.5
-            button.layer.borderColor = UIColor(hexCode: "#E5E5E5").cgColor
-            button.backgroundColor = .white
-
-            // 이미지 설정
-            let imageView = UIImageView(image: UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate))
-            imageView.contentMode = .scaleAspectFit
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-            imageView.tintColor = UIColor(hexCode: "#444444") // 원하는 색상으로 설정
-
-            // 라벨 설정
-            let label = UILabel()
-            label.text = title
-            label.textColor = .black
-            label.textAlignment = .center
-            label.font = UIFont.systemFont(ofSize: 13)
-            label.translatesAutoresizingMaskIntoConstraints = false
-
-            // 스택 뷰에 이미지와 라벨 추가
-            let stackView = UIStackView(arrangedSubviews: [imageView, label])
-            stackView.axis = .vertical
-            stackView.alignment = .center
-            stackView.spacing = 5
-            stackView.translatesAutoresizingMaskIntoConstraints = false
-
-            button.addSubview(stackView)
-
-            NSLayoutConstraint.activate([
-                stackView.centerXAnchor.constraint(equalTo: button.centerXAnchor),
-                stackView.centerYAnchor.constraint(equalTo: button.centerYAnchor),
-
-                imageView.widthAnchor.constraint(equalToConstant: 25), // 버튼 안에 있는 알약 이미지 크기
-                imageView.heightAnchor.constraint(equalToConstant: 25)
-            ])
-
-            button.addTarget(self, action: #selector(shapeButtonTapped(_:)), for: .touchUpInside)
-
-            return button
-        }
-        
-        // 버튼 스타일 업데이트
-        private func updateButtonStyles(isSaveButtonSelected: Bool) {
-            if isSaveButtonSelected {
-                saveButton.setTitleColor(.white, for: .normal)
-                saveButton.backgroundColor = UIColor(hexCode: "#00459C")
-                skipButton.setTitleColor(UIColor(hexCode: "#00459C"), for: .normal)
-                skipButton.backgroundColor = .white
+            if index < 3 {
+                firstRowStackView.addArrangedSubview(button)
             } else {
-                saveButton.setTitleColor(UIColor(hexCode: "#00459C"), for: .normal)
-                saveButton.backgroundColor = .white
-                skipButton.setTitleColor(.white, for: .normal)
-                skipButton.backgroundColor = UIColor(hexCode: "#00459C")
+                secondRowStackView.addArrangedSubview(button)
             }
         }
-        
-        // Step2 스타일 업데이트
-        private func updateStep2Style() {
-            let step2CircleView = step2StackView.arrangedSubviews.first as! UIView
-            step2CircleView.backgroundColor = UIColor(red: 0, green: 0.271, blue: 0.612, alpha: 1)
-            step2NumberLabel.textColor = .white
-            step2NumberLabel.text = "✔︎"
-        }
 
-        // Step3 스타일 업데이트
-        private func updateStep3Style() {
-            step3NumberLabel.text = "✔︎"
-            let step3CircleView = step3StackView.arrangedSubviews.first as! UIView
-            step3CircleView.backgroundColor = UIColor(red: 0, green: 0.271, blue: 0.612, alpha: 1)
-            step3NumberLabel.textColor = .white
-        }
+        shapeSelectionView.addArrangedSubview(firstRowStackView)
+        shapeSelectionView.addArrangedSubview(secondRowStackView)
+    }
 
-        // 버튼 클릭 이벤트 처리
+    // 알약 모양 버튼 생성
+    private func createShapeButton(with title: String, imageName: String) -> UIButton {
+        let button = UIButton(type: .custom)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.widthAnchor.constraint(equalToConstant: 104.32).isActive = true
+        button.heightAnchor.constraint(equalToConstant: 75.067).isActive = true
+        button.layer.cornerRadius = 25
+        button.layer.borderWidth = 1.5
+        button.layer.borderColor = UIColor(hexCode: "#E5E5E5").cgColor
+        button.backgroundColor = .white
+
+        // 이미지 설정
+        let imageView = UIImageView(image: UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate))
+        imageView.contentMode = .scaleAspectFit
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.tintColor = UIColor(hexCode: "#444444") // 원하는 색상으로 설정
+
+        // 라벨 설정
+        let label = UILabel()
+        label.text = title
+        label.textColor = .black
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        // 스택 뷰에 이미지와 라벨 추가
+        let stackView = UIStackView(arrangedSubviews: [imageView, label])
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.spacing = 5
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        button.addSubview(stackView)
+
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: button.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: button.centerYAnchor),
+
+            imageView.widthAnchor.constraint(equalToConstant: 25), // 버튼 안에 있는 알약 이미지 크기
+            imageView.heightAnchor.constraint(equalToConstant: 25)
+        ])
+
+        button.addTarget(self, action: #selector(shapeButtonTapped(_:)), for: .touchUpInside)
+
+        return button
+    }
+    
+    // 버튼 스타일 업데이트
+    private func updateButtonStyles(isSaveButtonSelected: Bool) {
+        if isSaveButtonSelected {
+            saveButton.setTitleColor(.white, for: .normal)
+            saveButton.backgroundColor = UIColor(hexCode: "#00459C")
+            skipButton.setTitleColor(UIColor(hexCode: "#00459C"), for: .normal)
+            skipButton.backgroundColor = .white
+        } else {
+            saveButton.setTitleColor(UIColor(hexCode: "#00459C"), for: .normal)
+            saveButton.backgroundColor = .white
+            skipButton.setTitleColor(.white, for: .normal)
+            skipButton.backgroundColor = UIColor(hexCode: "#00459C")
+        }
+    }
+    
+    // Step2 스타일 업데이트
+    private func updateStep2Style() {
+        let step2CircleView = step2StackView.arrangedSubviews.first as! UIView
+        step2CircleView.backgroundColor = UIColor(red: 0, green: 0.271, blue: 0.612, alpha: 1)
+        step2NumberLabel.textColor = .white
+        step2NumberLabel.text = "✔︎"
+    }
+
+    // Step3 스타일 업데이트
+    private func updateStep3Style() {
+        step3NumberLabel.text = "✔︎"
+        let step3CircleView = step3StackView.arrangedSubviews.first as! UIView
+        step3CircleView.backgroundColor = UIColor(red: 0, green: 0.271, blue: 0.612, alpha: 1)
+        step3NumberLabel.textColor = .white
+    }
+
+    // 버튼 클릭 이벤트 처리
     @objc private func shapeButtonTapped(_ sender: UIButton) {
         // 이전에 선택된 버튼 스타일 초기화
         if let previousButton = selectedButton {
@@ -648,4 +667,4 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
         button.layer.shadowRadius = 4
     }
 
-    }
+}

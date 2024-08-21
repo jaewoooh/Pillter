@@ -1,10 +1,8 @@
-//AlarmController
-
 import UIKit
 import UserNotifications
 
 class AlarmController: UIViewController {
-    
+
     // 상단에 "Today" 레이블
     let todayLabel: UILabel = {
         let label = UILabel()
@@ -88,12 +86,13 @@ class AlarmController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
         button.backgroundColor = UIColor(hex: "#196EB0")
-        button.layer.cornerRadius = 12
+        button.layer.cornerRadius = 10  // 둥근 모서리 크기를 줄임
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor(hex: "#EAECF0").cgColor
         button.setTitleColor(.white, for: .normal)
         return button
     }()
+
     
     // 저장된 알람들을 보여주는 스택 뷰
     let alarmStackView: UIStackView = {
@@ -111,6 +110,9 @@ class AlarmController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
+        // 네비게이션 바 타이틀 설정
+        self.title = "알림"
         
         // 컬렉션 뷰 델리게이트와 데이터 소스 설정
         dateCollectionView.delegate = self
@@ -188,10 +190,10 @@ class AlarmController: UIViewController {
             dayLabel.topAnchor.constraint(equalTo: medCountLabel.bottomAnchor, constant: 10),
             dayLabel.centerXAnchor.constraint(equalTo: medCircleView.centerXAnchor),
             
-            addButton.widthAnchor.constraint(equalToConstant: 70), // 너비 수정
-            addButton.heightAnchor.constraint(equalToConstant: 50), // 높이 설정
+            addButton.widthAnchor.constraint(equalToConstant: 50),
+            addButton.heightAnchor.constraint(equalToConstant: 50),
             addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20), // 오른쪽으로 이동
-            addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -60), // 약간 위로 올림
+            addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -70), // 약간 위로 올림
             
             alarmStackView.topAnchor.constraint(equalTo: medCircleView.bottomAnchor, constant: 20),
             alarmStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
@@ -398,6 +400,8 @@ func scheduleNotification(name: String, time: String) {
         UNUserNotificationCenter.current().add(request) { error in
             if let error = error {
                 print("알림 스케줄링 오류: \(error.localizedDescription)")
+            } else {
+                print("알림이 성공적으로 스케줄링되었습니다.")
             }
         }
     }
