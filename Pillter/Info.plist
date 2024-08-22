@@ -4,6 +4,14 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>SUITE-Variable</string>
+		<string>SUITE-SemiBold.otf</string>
+		<string>SUITE-Regular.otf</string>
+		<string>SUITE-Medium.otf</string>
+		<string>SUITE-Heavy.otf</string>
+		<string>SUITE-ExtraBold.otf</string>
+		<string>SUITE-Light.otf</string>
+		<string>SUITE-Bold.otf</string>
 		<string>ConcertOne-Regular.ttf</string>
 		<string>SOYO Maple Bold.otf</string>
 		<string>Cafe24Decobox.ttf</string>

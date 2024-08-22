@@ -12,6 +12,12 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
     let shapeSelectionView = UIStackView()
     let whiteContainerView = UIView()
     let mainStackView = UIStackView()
+    
+    // 제약 조건을 조정하기 위한 변수 선언
+    var titleTopConstraint: NSLayoutConstraint?
+    var titleLeadingConstraint: NSLayoutConstraint?
+    var descriptionTopConstraint: NSLayoutConstraint?
+    var descriptionLeadingConstraint: NSLayoutConstraint?
 
     let step1NumberLabel = UILabel()
     let step1Label = UILabel()
@@ -108,8 +114,8 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
         ])
         
         // 제목 레이블 설정
-        titleLabel.text = "Pillter"
-        titleLabel.font = UIFont(name: "ConcertOne-Regular", size: 40)
+        titleLabel.text = " Pillter"
+        titleLabel.font = UIFont(name: "ConcertOne-Regular", size: 50)
 //        음영효과 코드
 //        titleLabel.layer.shadowColor = UIColor.black.cgColor
 //        titleLabel.layer.shadowOffset = CGSize(width: 1.5, height: 1.5)
@@ -117,21 +123,28 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
 //        titleLabel.layer.shadowRadius = 1
 
         titleLabel.textColor = UIColor(hexCode: "#22212E")
-        titleLabel.textAlignment = .left
+        titleLabel.textAlignment = .justified
 
         // 설명 레이블 설정
         descriptionLabel.text = """
-        알약 타입은
-        반드시 선택해주세요.
-        식별 정보를 입력하시면
-        이를 기반으로 정확도가 향상됩니다.
-        촬영을 통해 약에 대한
-        정보를 알 수 있습니다.
+        
+           ①  알약 타입은 반드시 선택해주세요.
+        
+           ②  식별 정보 = 정확도 향상!
+        
+           ③  촬영 버튼 클릭!
+
         """
-        descriptionLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        descriptionLabel.font = UIFont(name: "SOYO Maple Bold", size: 10)
         descriptionLabel.textColor = UIColor(hexCode: "#22212E")
         descriptionLabel.numberOfLines = 0
-        descriptionLabel.textAlignment = .left
+        descriptionLabel.textAlignment = .justified
+        //        음영효과 코드
+//        descriptionLabel.layer.shadowColor = UIColor.black.cgColor
+//        descriptionLabel.layer.shadowOffset = CGSize(width: 1.5, height: 1.5)
+//        descriptionLabel.layer.shadowOpacity = 0.3
+//        descriptionLabel.layer.shadowRadius = 1
+
 
         // 알약 이미지 설정
         pillImageView.image = UIImage(named: "pill")
@@ -520,17 +533,17 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // UI 레이아웃 배치
     private func layoutUI() {
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 5),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            titleLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 0),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
 
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
             descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             descriptionLabel.trailingAnchor.constraint(equalTo: pillImageView.leadingAnchor, constant: -10),
 
-            pillImageView.topAnchor.constraint(equalTo: titleLabel.topAnchor),
-            pillImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            pillImageView.heightAnchor.constraint(equalToConstant: 130),
-            pillImageView.widthAnchor.constraint(equalToConstant: 130),
+            pillImageView.topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: 10),
+            pillImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -40),
+            pillImageView.heightAnchor.constraint(equalToConstant: 140),
+            pillImageView.widthAnchor.constraint(equalToConstant: 140),
 
             whiteContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             whiteContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
