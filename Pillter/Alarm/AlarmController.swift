@@ -7,8 +7,7 @@ class AlarmController: UIViewController {
     let todayLabel: UILabel = {
         let label = UILabel()
         label.textColor = UIColor(hex: "#00459C")  // 텍스트 색상
-        label.font = UIFont(name: "Inter", size: 20)
-        label.font = UIFont.systemFont(ofSize: 23, weight: .bold)  // 텍스트 크기 및 굵기 설정
+        label.font = UIFont(name: "SOYO Maple Bold", size: 22)
         label.textAlignment = .left  // 왼쪽 정렬
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -19,8 +18,7 @@ class AlarmController: UIViewController {
         let label = UILabel()
         label.text = "오늘의 약"
         label.textColor = UIColor(hex: "#00459C")
-        label.font = UIFont(name: "Inter", size: 29)
-        label.font = UIFont.systemFont(ofSize: 29, weight: .bold)
+        label.font = UIFont(name: "SOYO Maple Bold", size: 29)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
