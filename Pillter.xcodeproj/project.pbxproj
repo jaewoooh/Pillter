@@ -20,6 +20,15 @@
 		195362D52C76A3300092BFB9 /* SOYO Maple Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 195362D42C76A3300092BFB9 /* SOYO Maple Bold.otf */; };
 		195362D72C76A3380092BFB9 /* Cafe24Decobox.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 195362D62C76A3380092BFB9 /* Cafe24Decobox.ttf */; };
 		195362D92C76A61A0092BFB9 /* ConcertOne-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 195362D82C76A6190092BFB9 /* ConcertOne-Regular.ttf */; };
+		195362EF2C76DAFA0092BFB9 /* SUITE-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 195362E82C76DAFA0092BFB9 /* SUITE-Regular.otf */; };
+		195362F02C76DAFA0092BFB9 /* SUITE-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 195362E92C76DAFA0092BFB9 /* SUITE-SemiBold.otf */; };
+		195362F12C76DAFA0092BFB9 /* SUITE-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 195362EA2C76DAFA0092BFB9 /* SUITE-Bold.otf */; };
+		195362F22C76DAFA0092BFB9 /* SUITE-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 195362EB2C76DAFA0092BFB9 /* SUITE-Medium.otf */; };
+		195362F32C76DAFA0092BFB9 /* SUITE-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 195362EC2C76DAFA0092BFB9 /* SUITE-Light.otf */; };
+		195362F42C76DAFA0092BFB9 /* SUITE-ExtraBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 195362ED2C76DAFA0092BFB9 /* SUITE-ExtraBold.otf */; };
+		195362F52C76DAFA0092BFB9 /* SUITE-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 195362EE2C76DAFA0092BFB9 /* SUITE-Heavy.otf */; };
+		195362F72C76DBCE0092BFB9 /* SUITE-Variable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 195362F62C76DBCE0092BFB9 /* SUITE-Variable.ttf */; };
+		195362F92C76EFF20092BFB9 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 195362F82C76EFF20092BFB9 /* FirebaseFirestoreCombine-Community */; };
 		19D83E102C75B79B0034BE1F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E0F2C75B79B0034BE1F /* FirebaseAnalytics */; };
 		19D83E122C75B79E0034BE1F /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E112C75B79E0034BE1F /* FirebaseAnalyticsOnDeviceConversion */; };
 		19D83E142C75B7A30034BE1F /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E132C75B7A30034BE1F /* FirebaseAppCheck */; };
@@ -65,6 +74,14 @@
 		195362D42C76A3300092BFB9 /* SOYO Maple Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SOYO Maple Bold.otf"; sourceTree = "<group>"; };
 		195362D62C76A3380092BFB9 /* Cafe24Decobox.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cafe24Decobox.ttf; sourceTree = "<group>"; };
 		195362D82C76A6190092BFB9 /* ConcertOne-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ConcertOne-Regular.ttf"; sourceTree = "<group>"; };
+		195362E82C76DAFA0092BFB9 /* SUITE-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-Regular.otf"; sourceTree = "<group>"; };
+		195362E92C76DAFA0092BFB9 /* SUITE-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-SemiBold.otf"; sourceTree = "<group>"; };
+		195362EA2C76DAFA0092BFB9 /* SUITE-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-Bold.otf"; sourceTree = "<group>"; };
+		195362EB2C76DAFA0092BFB9 /* SUITE-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-Medium.otf"; sourceTree = "<group>"; };
+		195362EC2C76DAFA0092BFB9 /* SUITE-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-Light.otf"; sourceTree = "<group>"; };
+		195362ED2C76DAFA0092BFB9 /* SUITE-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-ExtraBold.otf"; sourceTree = "<group>"; };
+		195362EE2C76DAFA0092BFB9 /* SUITE-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-Heavy.otf"; sourceTree = "<group>"; };
+		195362F62C76DBCE0092BFB9 /* SUITE-Variable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-Variable.ttf"; sourceTree = "<group>"; };
 		19F6DE4C2C75BA2D0074B6A7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		19F6DE4E2C75BAE20074B6A7 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		19F6DE512C75BBB30074B6A7 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -95,6 +112,7 @@
 				19D83E142C75B7A30034BE1F /* FirebaseAppCheck in Frameworks */,
 				19D83E182C75B7B20034BE1F /* FirebaseAuthCombine-Community in Frameworks */,
 				19D83E1E2C75B7C40034BE1F /* FirebaseStorage in Frameworks */,
+				195362F92C76EFF20092BFB9 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				19D83E162C75B7A70034BE1F /* FirebaseAuth in Frameworks */,
 				19D83E102C75B79B0034BE1F /* FirebaseAnalytics in Frameworks */,
 				19D83E122C75B79E0034BE1F /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
@@ -216,6 +234,14 @@
 				195362D42C76A3300092BFB9 /* SOYO Maple Bold.otf */,
 				195362D62C76A3380092BFB9 /* Cafe24Decobox.ttf */,
 				195362D82C76A6190092BFB9 /* ConcertOne-Regular.ttf */,
+				195362EA2C76DAFA0092BFB9 /* SUITE-Bold.otf */,
+				195362ED2C76DAFA0092BFB9 /* SUITE-ExtraBold.otf */,
+				195362EE2C76DAFA0092BFB9 /* SUITE-Heavy.otf */,
+				195362EC2C76DAFA0092BFB9 /* SUITE-Light.otf */,
+				195362EB2C76DAFA0092BFB9 /* SUITE-Medium.otf */,
+				195362E82C76DAFA0092BFB9 /* SUITE-Regular.otf */,
+				195362E92C76DAFA0092BFB9 /* SUITE-SemiBold.otf */,
+				195362F62C76DBCE0092BFB9 /* SUITE-Variable.ttf */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -253,6 +279,7 @@
 				19D83E192C75B7B60034BE1F /* FirebaseDatabase */,
 				19D83E1B2C75B7BE0034BE1F /* FirebaseFirestore */,
 				19D83E1D2C75B7C40034BE1F /* FirebaseStorage */,
+				195362F82C76EFF20092BFB9 /* FirebaseFirestoreCombine-Community */,
 			);
 			productName = Pillter;
 			productReference = 193FC4632C75B4D300C03E29 /* Pillter.app */;
@@ -300,8 +327,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				195362F22C76DAFA0092BFB9 /* SUITE-Medium.otf in Resources */,
 				195362D72C76A3380092BFB9 /* Cafe24Decobox.ttf in Resources */,
+				195362F72C76DBCE0092BFB9 /* SUITE-Variable.ttf in Resources */,
+				195362EF2C76DAFA0092BFB9 /* SUITE-Regular.otf in Resources */,
+				195362F02C76DAFA0092BFB9 /* SUITE-SemiBold.otf in Resources */,
 				19F6DE4D2C75BA2D0074B6A7 /* Launch Screen.storyboard in Resources */,
+				195362F32C76DAFA0092BFB9 /* SUITE-Light.otf in Resources */,
 				195362D52C76A3300092BFB9 /* SOYO Maple Bold.otf in Resources */,
 				195362D02C769A9C0092BFB9 /* Pill_anicon.gif in Resources */,
 				193FC4702C75B4D400C03E29 /* Assets.xcassets in Resources */,
@@ -311,6 +343,9 @@
 				195362CC2C7699600092BFB9 /* Home_anicon.gif in Resources */,
 				193FC46E2C75B4D300C03E29 /* Base in Resources */,
 				195362D92C76A61A0092BFB9 /* ConcertOne-Regular.ttf in Resources */,
+				195362F42C76DAFA0092BFB9 /* SUITE-ExtraBold.otf in Resources */,
+				195362F52C76DAFA0092BFB9 /* SUITE-Heavy.otf in Resources */,
+				195362F12C76DAFA0092BFB9 /* SUITE-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -583,6 +618,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 193FC48B2C75B57100C03E29 /* XCRemoteSwiftPackageReference "generative-ai-swift" */;
 			productName = GoogleGenerativeAI;
+		};
+		195362F82C76EFF20092BFB9 /* FirebaseFirestoreCombine-Community */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 193FC48A2C75B56500C03E29 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseFirestoreCombine-Community";
 		};
 		19D83E0F2C75B79B0034BE1F /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
