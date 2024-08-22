@@ -130,6 +130,7 @@ class ChatExplainController: UIViewController, UITextFieldDelegate {
         textField.placeholder = "Hello ChatPill!"
         textField.font = UIFont.systemFont(ofSize: 15)
         textField.tintColor = .black
+        textField.textColor = .black
         textField.borderStyle = .none
         textField.layer.cornerRadius = 15
         textField.layer.masksToBounds = false

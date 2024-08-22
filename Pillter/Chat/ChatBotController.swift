@@ -70,6 +70,12 @@ class ChatBotController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // 그라데이션 배경 설정
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [UIColor(hex: "E6EEFF").cgColor, UIColor(hex: "#FFFFFF").cgColor]
+        gradientLayer.locations = [0.0, 1.0]
+        gradientLayer.frame = view.bounds
+        view.layer.insertSublayer(gradientLayer, at: 0)
         view.backgroundColor = .white
 
         
