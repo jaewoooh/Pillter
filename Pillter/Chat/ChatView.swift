@@ -16,7 +16,7 @@ struct ChatView: View {
     @State private var selectedPhotoData = [Data]()
     @State private var showAlert = false //알림 상태
     
-    var externalMessage: String? //ChatExplainController에서 전달된 메시지
+    @State var externalMessage: String? //ChatExplainController에서 전달된 메시지
     
     var body: some View {
         VStack {
@@ -29,7 +29,7 @@ struct ChatView: View {
             //메시지 리스트.
             ScrollViewReader(content: { proxy in
                 ScrollView {
-                    ForEach(chatService.messages) { chatMessage in
+                    ForEach(chatService.messages.filter { $0.role != .system }) { chatMessage in
                         //메시지 뷰
                         chatMessageView(chatMessage)
                             .padding(.horizontal, 10)
@@ -87,7 +87,13 @@ struct ChatView: View {
                         .cornerRadius(15)
              
                     
-                    Button(action: sendMessage, label: {
+                    Button(action: {
+                        DispatchQueue.main.async {
+                            textInput = ""
+                        }
+                        
+                        sendMessage()
+                    }, label: {
                         Image(systemName: "paperplane.fill")
                             .foregroundColor(.blue)
                             .padding(10)
@@ -103,9 +109,12 @@ struct ChatView: View {
             .padding(.horizontal)
             .padding(.bottom, 60)
             .onAppear {
-                if let message = externalMessage {
+                if let message = externalMessage, !message.isEmpty {
                     textInput = message
+                    //clearMessages()
                     sendMessage()
+                    externalMessage = ""
+                    
                 }
             }
         }
@@ -116,6 +125,9 @@ struct ChatView: View {
                 Color.white
             }
             .ignoresSafeArea()
+        }
+        .onTapGesture {
+            UIApplication.shared.hideKeyboard()
         }
         .navigationBarItems(trailing: Button(action: {
             showAlert = true // 알림 표시
@@ -191,5 +203,11 @@ struct ChatView: View {
     private func clearMessages()
     {
         chatService.clearMessages()
+    }
+}
+
+extension UIApplication {
+    func hideKeyboard() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }

@@ -1,96 +1,117 @@
+//LocationController
+
 import UIKit
-import CoreLocation
 import MapKit
+import CoreLocation
 
 class LocationController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
-    private var mapView: MKMapView!
+    var mapView: MKMapView!
+    let locationManager = CLLocationManager()
+    var pharmacyAnnotations: [MKPointAnnotation] = []
+    var circleOverlay: MKCircle? //UserOverlay에서 사용
     
-    private let mapTedxtField: UITextField =
-    {
-        let textField = UITextField()
-        textField.placeholder = "약국 검색..."
-        textField.backgroundColor = .white
-        textField.textColor = .black
-        textField.borderStyle = .none
-        textField.layer.cornerRadius = 15
-        textField.layer.masksToBounds = false
-        textField.autocorrectionType = .no
-        textField.spellCheckingType = .no
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        
-        return textField
-    }()
+    // 스크롤뷰와 컨텐츠뷰를 클래스 레벨에서 정의, PharmacyUI에서 사용
+    var scrollView: UIScrollView? {
+        didSet {
+            scrollView?.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+    var contentView: UIView? {
+        didSet {
+            contentView?.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
     
+    var filterPharmacyData: [DataItem] = [] //운영시간조회에 담을 변수
     
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
+
+        // MKMapView 인스턴스 생성
+        if mapView == nil {
+            mapView = MKMapView(frame: self.view.bounds)
+            mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            mapView.mapType = .standard
+            
+            // View에 MKMapView 추가
+            view.addSubview(mapView)
+        }
+
         
-        mapView = MKMapView(frame: self.view.frame)
-        view.addSubview(mapView)
+//        // 위치 권한 ㅇㅋ안했을시 초기 위치를 한성대학교 근처로 설정 (한성대입구역 근처)
+//        let initialLocation = CLLocation(latitude: 37.5887, longitude: 127.0069)
+//        setMapRegion(location: initialLocation, distance: 500) // 500m 범위로 설정
+
         
-        mapView.addSubview(mapTedxtField)
+        mapManagerSettings()
+
+        // 검색창 추가
+        //setupSearchBar()
+
+        // json으로 불러온 데이터 보여주기
+        //loadPharmacyData()
         
-        mapFunction()
-        setConstraints()
-    }
-  
-    func mapFunction()
-    {
-        
-        
+        mapUICustom()
+        locationGPSCheck()
     }
     
-    func setConstraints()
+    //맵뷰와 위치관리자 권한 설정같은거
+    func mapManagerSettings()
     {
+        //맵뷰 설정
+        mapView.delegate = self
+        mapView.showsUserLocation = true
+        //mapView.userTrackingMode = .followWithHeading
+        
+        // 위치 관리자 설정
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest //위치 정확도 향상
+        locationManager.distanceFilter = 20.0 //20m 이동시에만 업데이트
+        locationManager.requestWhenInUseAuthorization() //권한요청
+        locationManager.startUpdatingLocation() //실시간 위치
+        //locationManager.startUpdatingHeading() //방향 업데이트
+        //locationManager.startMonitoringSignificantLocationChanges() //장거리 이동시 위치업뎃
+    }
+        
+    func mapUICustom() {
+        // 사용자 위치 추적 버튼 (MKUserTrackingButton 대신 커스텀 버튼 사용)
+        let userTrackingBtn = UIButton(type: .system)
+        userTrackingBtn.setImage(UIImage(systemName: "location.fill"), for: .normal)
+
+        userTrackingBtn.translatesAutoresizingMaskIntoConstraints = false
+        userTrackingBtn.backgroundColor = .white
+        userTrackingBtn.layer.cornerRadius = 5
+        userTrackingBtn.layer.borderWidth = 1
+        userTrackingBtn.layer.borderColor = UIColor.lightGray.cgColor
+        
+        // 버튼 클릭 시 행동 추가
+        userTrackingBtn.addTarget(self, action: #selector(startTrackingWithHeading), for: .touchUpInside)
+        userTrackingBtn.addTarget(self, action: #selector(buttonPressed(_:)), for: .touchDown)
+        userTrackingBtn.addTarget(self, action: #selector(buttonReleased(_:)), for: [.touchUpInside, .touchCancel, .touchDragExit])
+        
+        mapView.addSubview(userTrackingBtn)
+        
+        // UI constraint
         NSLayoutConstraint.activate([
-            mapTedxtField.topAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.topAnchor, constant: 0),
-            mapTedxtField.leadingAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            mapTedxtField.trailingAnchor.constraint(equalTo: mapView.trailingAnchor, constant: -20),
-            mapTedxtField.widthAnchor.constraint(equalToConstant: 200),
-            mapTedxtField.heightAnchor.constraint(equalToConstant: 40)
+            userTrackingBtn.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor, constant: -200),
+            userTrackingBtn.leadingAnchor.constraint(equalTo: mapView.leadingAnchor, constant: 10),
+            userTrackingBtn.widthAnchor.constraint(equalToConstant: 44),
+            userTrackingBtn.heightAnchor.constraint(equalToConstant: 44),
         ])
     }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
 
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
+    @objc func startTrackingWithHeading(_ sender: UIButton) {
+        mapView.setUserTrackingMode(.followWithHeading, animated: true)
     }
     
-    //키보드 열고닫기
-    func setupKeyboardEvent() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillShow),
-                                               name: UIResponder.keyboardWillShowNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillHide),
-                                               name: UIResponder.keyboardWillHideNotification,
-                                               object: nil)
+    func setMapRegion(location: CLLocation, distance: CLLocationDistance) {
+        let region = MKCoordinateRegion(
+            center: location.coordinate,
+            latitudinalMeters: distance * 2, // 지도를 더 확대
+            longitudinalMeters: distance * 2)
+        mapView.setRegion(region, animated: true)
     }
     
-    @objc func keyboardWillShow(_ sender: Notification) {
-        // 현재 동작하고 있는 이벤트에서 키보드의 frame을 받아옴
-        guard let keyboardFrame = sender.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue else { return }
-        let keyboardHeight = keyboardFrame.cgRectValue.height
-
-        // 이 조건을 넣어주지 않으면, 각각의 텍스트필드마다 keyboardWillShow 동작이 실행되므로 아래와 같은 현상이 발생
-        if view.frame.origin.y == 0 {
-            view.frame.origin.y -= keyboardHeight
-        }
-    }
-
-    @objc func keyboardWillHide(_ sender: Notification) {
-        if view.frame.origin.y != 0 {
-            view.frame.origin.y = 0
-        }
-    }
-
 }
-
 
