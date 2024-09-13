@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		192ECD152C94853700414587 /* PharmacyStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192ECD142C94853700414587 /* PharmacyStruct.swift */; };
+		192ECD172C94855F00414587 /* SetAuthorization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192ECD162C94855F00414587 /* SetAuthorization.swift */; };
+		192ECD192C94858000414587 /* MapViewCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 192ECD182C94858000414587 /* MapViewCustom.swift */; };
+		1930F5CC2C7C377D00FE3F93 /* PharmacyUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1930F5CB2C7C377D00FE3F93 /* PharmacyUI.swift */; };
 		193FC4672C75B4D300C03E29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193FC4662C75B4D300C03E29 /* AppDelegate.swift */; };
 		193FC4692C75B4D300C03E29 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193FC4682C75B4D300C03E29 /* SceneDelegate.swift */; };
 		193FC46E2C75B4D300C03E29 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 193FC46D2C75B4D300C03E29 /* Base */; };
@@ -29,6 +33,9 @@
 		195362F52C76DAFA0092BFB9 /* SUITE-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 195362EE2C76DAFA0092BFB9 /* SUITE-Heavy.otf */; };
 		195362F72C76DBCE0092BFB9 /* SUITE-Variable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 195362F62C76DBCE0092BFB9 /* SUITE-Variable.ttf */; };
 		195362F92C76EFF20092BFB9 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 195362F82C76EFF20092BFB9 /* FirebaseFirestoreCombine-Community */; };
+		19C990802C8709470049BA2C /* LoadJason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C9907F2C8709470049BA2C /* LoadJason.swift */; };
+		19C990822C8709E10049BA2C /* LocationKeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C990812C8709E10049BA2C /* LocationKeyBoard.swift */; };
+		19C990842C870A100049BA2C /* SeoulPharmacy.json in Resources */ = {isa = PBXBuildFile; fileRef = 19C990832C870A100049BA2C /* SeoulPharmacy.json */; };
 		19D83E102C75B79B0034BE1F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E0F2C75B79B0034BE1F /* FirebaseAnalytics */; };
 		19D83E122C75B79E0034BE1F /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E112C75B79E0034BE1F /* FirebaseAnalyticsOnDeviceConversion */; };
 		19D83E142C75B7A30034BE1F /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E132C75B7A30034BE1F /* FirebaseAppCheck */; };
@@ -60,6 +67,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		192ECD142C94853700414587 /* PharmacyStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PharmacyStruct.swift; sourceTree = "<group>"; };
+		192ECD162C94855F00414587 /* SetAuthorization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetAuthorization.swift; sourceTree = "<group>"; };
+		192ECD182C94858000414587 /* MapViewCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewCustom.swift; sourceTree = "<group>"; };
+		1930F5CB2C7C377D00FE3F93 /* PharmacyUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PharmacyUI.swift; sourceTree = "<group>"; };
 		193FC4632C75B4D300C03E29 /* Pillter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pillter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		193FC4662C75B4D300C03E29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		193FC4682C75B4D300C03E29 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +93,9 @@
 		195362ED2C76DAFA0092BFB9 /* SUITE-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-ExtraBold.otf"; sourceTree = "<group>"; };
 		195362EE2C76DAFA0092BFB9 /* SUITE-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-Heavy.otf"; sourceTree = "<group>"; };
 		195362F62C76DBCE0092BFB9 /* SUITE-Variable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-Variable.ttf"; sourceTree = "<group>"; };
+		19C9907F2C8709470049BA2C /* LoadJason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadJason.swift; sourceTree = "<group>"; };
+		19C990812C8709E10049BA2C /* LocationKeyBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationKeyBoard.swift; sourceTree = "<group>"; };
+		19C990832C870A100049BA2C /* SeoulPharmacy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SeoulPharmacy.json; sourceTree = "<group>"; };
 		19F6DE4C2C75BA2D0074B6A7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		19F6DE4E2C75BAE20074B6A7 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		19F6DE512C75BBB30074B6A7 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -175,6 +189,13 @@
 			isa = PBXGroup;
 			children = (
 				19F6DE5F2C75BCD90074B6A7 /* LocationController.swift */,
+				192ECD142C94853700414587 /* PharmacyStruct.swift */,
+				1930F5CB2C7C377D00FE3F93 /* PharmacyUI.swift */,
+				192ECD162C94855F00414587 /* SetAuthorization.swift */,
+				192ECD182C94858000414587 /* MapViewCustom.swift */,
+				19C9907F2C8709470049BA2C /* LoadJason.swift */,
+				19C990812C8709E10049BA2C /* LocationKeyBoard.swift */,
+				19C990832C870A100049BA2C /* SeoulPharmacy.json */,
 			);
 			path = Location;
 			sourceTree = "<group>";
@@ -346,6 +367,7 @@
 				195362F42C76DAFA0092BFB9 /* SUITE-ExtraBold.otf in Resources */,
 				195362F52C76DAFA0092BFB9 /* SUITE-Heavy.otf in Resources */,
 				195362F12C76DAFA0092BFB9 /* SUITE-Bold.otf in Resources */,
+				19C990842C870A100049BA2C /* SeoulPharmacy.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,10 +385,15 @@
 				19F6DE522C75BBB30074B6A7 /* HomeController.swift in Sources */,
 				19F6DE542C75BBD40074B6A7 /* AlarmController.swift in Sources */,
 				19F6DE6E2C75BD7E0074B6A7 /* ChatService.swift in Sources */,
+				1930F5CC2C7C377D00FE3F93 /* PharmacyUI.swift in Sources */,
+				192ECD192C94858000414587 /* MapViewCustom.swift in Sources */,
+				192ECD172C94855F00414587 /* SetAuthorization.swift in Sources */,
 				193FC4672C75B4D300C03E29 /* AppDelegate.swift in Sources */,
 				19F6DE5C2C75BC2A0074B6A7 /* UIColor.swift in Sources */,
 				19F6DE6A2C75BD620074B6A7 /* ChatBubble.swift in Sources */,
+				19C990822C8709E10049BA2C /* LocationKeyBoard.swift in Sources */,
 				19F6DE622C75BCEC0074B6A7 /* ChatBotController.swift in Sources */,
+				19C990802C8709470049BA2C /* LoadJason.swift in Sources */,
 				195362C02C7653F00092BFB9 /* PillInfoViewController.swift in Sources */,
 				19F6DE662C75BD470074B6A7 /* APIKey.swift in Sources */,
 				19F6DE4F2C75BAE30074B6A7 /* CustomTabBarController.swift in Sources */,
@@ -374,6 +401,7 @@
 				19F6DE6C2C75BD700074B6A7 /* ChatBubbleShape.swift in Sources */,
 				195362CA2C7698F80092BFB9 /* UIImage+GIF.swift in Sources */,
 				19F6DE5A2C75BC180074B6A7 /* AddMedViewControllerDelegate.swift in Sources */,
+				192ECD152C94853700414587 /* PharmacyStruct.swift in Sources */,
 				19F6DE642C75BD300074B6A7 /* ChatExplainController.swift in Sources */,
 				19F6DE682C75BD580074B6A7 /* Chat.swift in Sources */,
 				19F6DE582C75BBF60074B6A7 /* DateCollectionViewCell.swift in Sources */,

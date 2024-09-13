@@ -10,6 +10,7 @@ import Foundation
 enum ChatRole {
     case user
     case model
+    case system
 }
 
 struct ChatMessage: Identifiable, Equatable {
