@@ -250,7 +250,17 @@ class AddMedViewController: UIViewController {
         
         setupViews()
         setupConstraints()
+        
+        // 빈 화면 터치 시 키보드를 내리는 제스쳐 추가
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
+    
+    // 키보드 사라지는 기능
+    @objc func dismissKeyboard(){
+        view.endEditing(true)
+    }
+    
     
     func setupDateData() {
         let calendar = Calendar.current

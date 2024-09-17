@@ -58,6 +58,9 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         // 네비게이션 바 타이틀 설정
         setupNavigationBarTitleView()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
     }
     
     // 네비게이션 바 아이콘 3D작업
@@ -463,6 +466,11 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         pillImageView.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    //키보드 사라지기
+    @objc func dismissKeyboard(){
+        view.endEditing(true)
     }
 
     // 아코디언 버튼 클릭 이벤트 처리
