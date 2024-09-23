@@ -9,6 +9,9 @@ import UIKit
 
 class MyPageController: UIViewController {
 
+    
+    let data = ["Item 1", "Item2", "Item3"]
+    
     // UI 구성
     var titleLabel: UILabel =
     {
@@ -39,15 +42,11 @@ class MyPageController: UIViewController {
         ])
         
         
-        if pillList.isEmpty
-        {
-            setupUI()
-        }
-        else
-        {
-            setTableView()
-        }
-        setTableView()
+
+        
+        setupUI()
+        
+        //setTableView()
         setupTableView() //테이블뷰 setup
         //네비게이션바 애니메이션효과 추가
         setupNavigationBarTitleView()

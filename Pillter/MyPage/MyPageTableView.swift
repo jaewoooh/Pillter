@@ -10,29 +10,21 @@ import UIKit
 
 extension MyPageController: UITableViewDataSource, UITableViewDelegate
 {
-    // #MARK: 테이블뷰 delegate datasource 함수
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return pillList.count
+        
+        return data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let pill = pillList[indexPath.row]
-        cell.textLabel?.text = pill.name
+        
+        // 셀의 기본 텍스트 레이블에 데이터 설정
+        cell.textLabel?.text = data[indexPath.row]
+        
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let selectedPill = pillList[indexPath.row]
-//
-//        if let dbPointer = DBHelper.shared.db
-//        {
-//            DBHelper.shared.deleteById(id: selectedPill.id, databasePointer: dbPointer)
-//
-//            pillList.remove(at: indexPath.row)
-//            tableView.reloadData()
-//        }
-    }
+
+    // #MARK: 테이블뷰 delegate datasource 함수
     
     func setupTableView()
     {

@@ -41,11 +41,12 @@
 		19AF256C2CA17D48002B4355 /* AlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF256B2CA17D48002B4355 /* AlarmView.swift */; };
 		19AF256E2CA17D60002B4355 /* AlarmDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF256D2CA17D60002B4355 /* AlarmDetailViewController.swift */; };
 		19AF25702CA17D7C002B4355 /* MyPageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF256F2CA17D7C002B4355 /* MyPageTableView.swift */; };
+		19AF25722CA180E8002B4355 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19AF25712CA180E8002B4355 /* LaunchScreen.storyboard */; };
 		19C990802C8709470049BA2C /* LoadJason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C9907F2C8709470049BA2C /* LoadJason.swift */; };
 		19C990822C8709E10049BA2C /* LocationKeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C990812C8709E10049BA2C /* LocationKeyBoard.swift */; };
 		19C990842C870A100049BA2C /* SeoulPharmacy.json in Resources */ = {isa = PBXBuildFile; fileRef = 19C990832C870A100049BA2C /* SeoulPharmacy.json */; };
 		19CCBB7D2CA15D8600659935 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CCBB7C2CA15D8600659935 /* SearchViewController.swift */; };
-		19CCBB7F2CA15D9E00659935 /* ZoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CCBB7E2CA15D9E00659935 /* ZoomViewController.swift */; };
+		19CCBB7F2CA15D9E00659935 /* ZoomController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CCBB7E2CA15D9E00659935 /* ZoomController.swift */; };
 		19CCBB812CA15DBD00659935 /* PharmacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CCBB802CA15DBD00659935 /* PharmacyViewController.swift */; };
 		19D83E102C75B79B0034BE1F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E0F2C75B79B0034BE1F /* FirebaseAnalytics */; };
 		19D83E122C75B79E0034BE1F /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E112C75B79E0034BE1F /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -111,11 +112,12 @@
 		19AF256B2CA17D48002B4355 /* AlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmView.swift; sourceTree = "<group>"; };
 		19AF256D2CA17D60002B4355 /* AlarmDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDetailViewController.swift; sourceTree = "<group>"; };
 		19AF256F2CA17D7C002B4355 /* MyPageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableView.swift; sourceTree = "<group>"; };
+		19AF25712CA180E8002B4355 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		19C9907F2C8709470049BA2C /* LoadJason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadJason.swift; sourceTree = "<group>"; };
 		19C990812C8709E10049BA2C /* LocationKeyBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationKeyBoard.swift; sourceTree = "<group>"; };
 		19C990832C870A100049BA2C /* SeoulPharmacy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SeoulPharmacy.json; sourceTree = "<group>"; };
 		19CCBB7C2CA15D8600659935 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		19CCBB7E2CA15D9E00659935 /* ZoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomViewController.swift; sourceTree = "<group>"; };
+		19CCBB7E2CA15D9E00659935 /* ZoomController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomController.swift; sourceTree = "<group>"; };
 		19CCBB802CA15DBD00659935 /* PharmacyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PharmacyViewController.swift; sourceTree = "<group>"; };
 		19F6DE4E2C75BAE20074B6A7 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		19F6DE512C75BBB30074B6A7 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				195362C42C765D600092BFB9 /* Alarm */,
 				195362C52C765DAC0092BFB9 /* MyPage */,
 				193FC46C2C75B4D300C03E29 /* Main.storyboard */,
+				19AF25712CA180E8002B4355 /* LaunchScreen.storyboard */,
 				193FC46F2C75B4D400C03E29 /* Assets.xcassets */,
 				193FC4742C75B4D400C03E29 /* Info.plist */,
 			);
@@ -213,7 +216,7 @@
 			children = (
 				19F6DE5F2C75BCD90074B6A7 /* LocationController.swift */,
 				19CCBB7C2CA15D8600659935 /* SearchViewController.swift */,
-				19CCBB7E2CA15D9E00659935 /* ZoomViewController.swift */,
+				19CCBB7E2CA15D9E00659935 /* ZoomController.swift */,
 				19CCBB802CA15DBD00659935 /* PharmacyViewController.swift */,
 				192ECD142C94853700414587 /* PharmacyStruct.swift */,
 				1930F5CB2C7C377D00FE3F93 /* PharmacyUI.swift */,
@@ -396,6 +399,7 @@
 				195362D92C76A61A0092BFB9 /* ConcertOne-Regular.ttf in Resources */,
 				195362F42C76DAFA0092BFB9 /* SUITE-ExtraBold.otf in Resources */,
 				195362F52C76DAFA0092BFB9 /* SUITE-Heavy.otf in Resources */,
+				19AF25722CA180E8002B4355 /* LaunchScreen.storyboard in Resources */,
 				195362F12C76DAFA0092BFB9 /* SUITE-Bold.otf in Resources */,
 				19C990842C870A100049BA2C /* SeoulPharmacy.json in Resources */,
 			);
@@ -434,7 +438,7 @@
 				19AF25702CA17D7C002B4355 /* MyPageTableView.swift in Sources */,
 				193FC4692C75B4D300C03E29 /* SceneDelegate.swift in Sources */,
 				19F6DE6C2C75BD700074B6A7 /* ChatBubbleShape.swift in Sources */,
-				19CCBB7F2CA15D9E00659935 /* ZoomViewController.swift in Sources */,
+				19CCBB7F2CA15D9E00659935 /* ZoomController.swift in Sources */,
 				19AF25642CA17C3F002B4355 /* LoadPillJson.swift in Sources */,
 				195362CA2C7698F80092BFB9 /* UIImage+GIF.swift in Sources */,
 				19CCBB7D2CA15D8600659935 /* SearchViewController.swift in Sources */,
@@ -591,8 +595,12 @@
 				DEVELOPMENT_TEAM = TY5LUL9HJ4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Pillter/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "알약 인식을 위해 카메라 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "~를 사용하려면 위치를 허용해야합니다.";
+				INFOPLIST_KEY_NSLocationUsageDescription = "~를 사용하려면 위치를 허용해야합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "~를 사용하려면 위치를 허용해야합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -620,8 +628,12 @@
 				DEVELOPMENT_TEAM = TY5LUL9HJ4;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Pillter/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "알약 인식을 위해 카메라 권한이 필요합니다.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "~를 사용하려면 위치를 허용해야합니다.";
+				INFOPLIST_KEY_NSLocationUsageDescription = "~를 사용하려면 위치를 허용해야합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "~를 사용하려면 위치를 허용해야합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

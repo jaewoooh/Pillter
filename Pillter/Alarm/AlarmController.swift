@@ -1,13 +1,31 @@
 import UIKit
+import FirebaseFirestore
 import UserNotifications
 
 class AlarmController: UIViewController {
 
+    // Firestore 데이터베이스 인스턴스
+     let db = Firestore.firestore()
+    
+    // 스크롤 뷰와 컨텐츠 뷰
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        return scrollView
+    }()
+
+    let contentView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
     // 상단에 현재 날짜를 표시하는 레이블
     let todayLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(hex: "#00459C")  // 텍스트 색상
+        label.textColor = UIColor(hex: "#196EB0")  // 텍스트 색상
         label.font = UIFont(name: "SOYO Maple Bold", size: 22)
+        label.font = UIFont.systemFont(ofSize: 23, weight: .bold)  // 텍스트 크기 및 굵기 설정
         label.textAlignment = .left  // 왼쪽 정렬
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -17,8 +35,9 @@ class AlarmController: UIViewController {
     let todayMedLabel: UILabel = {
         let label = UILabel()
         label.text = "오늘의 약"
-        label.textColor = UIColor(hex: "#00459C")
-        label.font = UIFont(name: "SOYO Maple Bold", size: 29)
+        label.textColor = UIColor(hex: "#196EB0")
+        label.font = UIFont(name: "SOYO Maple Bold", size: 22)
+        label.font = UIFont.systemFont(ofSize: 23, weight: .bold)
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -75,7 +94,7 @@ class AlarmController: UIViewController {
     // 약 복용 현황을 보여주는 원형 뷰
     let medCircleView: UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(hex: "#F4F9FD")
+        view.backgroundColor = UIColor(hex: "#EFFAFF")
         view.layer.cornerRadius = 120
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -94,7 +113,7 @@ class AlarmController: UIViewController {
     let medCountLabel: UILabel = {
         let label = UILabel()
         let attributedText = NSMutableAttributedString(string: "0", attributes: [NSAttributedString.Key.foregroundColor: UIColor(hex: "#9D9D9D"), NSAttributedString.Key.font: UIFont.systemFont(ofSize: 36)])
-        attributedText.append(NSAttributedString(string: "/0", attributes: [NSAttributedString.Key.foregroundColor: UIColor(hex: "#00459C"), NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 36)]))
+        attributedText.append(NSAttributedString(string: "/0", attributes: [NSAttributedString.Key.foregroundColor: UIColor(hex: "#196EB0"), NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 36)]))
         label.attributedText = attributedText
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -118,7 +137,7 @@ class AlarmController: UIViewController {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 24)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(addButtonTapped), for: .touchUpInside)
-        button.backgroundColor = UIColor(hex: "#00459C")
+        button.backgroundColor = UIColor(hex: "#196EB0")
         button.layer.cornerRadius = 10  // 둥근 모서리 크기를 줄임
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor(hex: "#EAECF0").cgColor
@@ -170,6 +189,8 @@ class AlarmController: UIViewController {
         setupViews()
         setupConstraints()
         setupDates()
+        // Firebase에서 알람 데이터를 불러오는 함수 호출
+        fetchAlarms(for: Date())
         
         // 오늘 날짜의 인덱스 설정
         let todayIndex = dates.firstIndex { Calendar.current.isDateInToday($0) }
@@ -186,12 +207,151 @@ class AlarmController: UIViewController {
                 print("알림 권한 거부")
             }
         }
-        
-        // 네비게이션바 타이틀 애니메이션 효과 추가
-        setupNavigationBarTitleView()
+        // 네비게이션 바 타이틀을 GIF로 설정
+          setupNavigationBarTitleView()
     }
     
-    //네비게이션바 타이틀 애니메이션 효과 기능 함수
+    func fetchAlarms(for date: Date) {
+        // DateFormatter를 사용하여 선택된 날짜를 "MM월 dd일" 형식으로 변환
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR") // 한국 로케일 사용
+        dateFormatter.dateFormat = "MM월 dd일"
+        let selectedDateString = dateFormatter.string(from: date)  // 선택된 날짜의 문자열 생성
+        
+        print("선택된 날짜: \(selectedDateString)")  // 로그로 출력하여 쿼리할 날짜 확인
+        
+        // Firestore에서 선택된 날짜의 알람만 가져오기
+        db.collection("alarms").whereField("date", isEqualTo: selectedDateString).getDocuments { [weak self] (snapshot, error) in
+            guard let self = self else { return }
+            if let error = error {
+                print("Error fetching alarms: \(error.localizedDescription)")
+            } else {
+                self.alarmStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
+
+                guard let documents = snapshot?.documents else {
+                    print("해당 날짜에 대한 데이터가 없습니다.")
+                    return
+                }
+
+                for document in documents {
+                    let data = document.data()
+                    let name = data["name"] as? String ?? ""
+                    let dosage = data["dosage"] as? String ?? ""
+                    let date = data["date"] as? String ?? ""
+                    let time = data["time"] as? String ?? ""
+                    let documentID = document.documentID  // Firestore의 documentID를 가져옴
+
+                    let alarmView = self.createAlarmView(name: name, dosage: dosage, date: date, time: time)
+                    alarmView.documentID = documentID  // AlarmView에 documentID 설정
+                    self.alarmStackView.addArrangedSubview(alarmView)
+                }
+                self.updateMedCountLabel()  // 약 복용량 업데이트
+            }
+        }
+    }
+
+    func createAlarmView(name: String, dosage: String, date: String, time: String) -> AlarmView {
+        let containerView = AlarmView()
+        containerView.name = name
+        containerView.dosage = dosage
+        containerView.date = date
+        containerView.time = time
+        containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.heightAnchor.constraint(equalToConstant: 64).isActive = true
+        containerView.layer.cornerRadius = 12
+        containerView.layer.borderWidth = 1
+        containerView.layer.borderColor = UIColor(hex: "#EAECF0").cgColor
+        containerView.backgroundColor = UIColor.white
+
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        stackView.alignment = .center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        let infoIcon = UIImageView(image: UIImage(systemName: "info.circle.fill"))
+        infoIcon.tintColor = UIColor(hex: "#FBBC05")
+        infoIcon.translatesAutoresizingMaskIntoConstraints = false
+        infoIcon.widthAnchor.constraint(equalToConstant: 24).isActive = true
+        infoIcon.heightAnchor.constraint(equalToConstant: 24).isActive = true
+
+        // info 아이콘에 탭 제스처 추가
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(infoIconTapped(_:)))
+        infoIcon.isUserInteractionEnabled = true
+        infoIcon.addGestureRecognizer(tapGestureRecognizer)
+
+        let labelsStackView = UIStackView()
+        labelsStackView.axis = .vertical
+        labelsStackView.spacing = 4
+        labelsStackView.alignment = .leading
+        labelsStackView.translatesAutoresizingMaskIntoConstraints = false
+
+        let nameLabel = UILabel()
+        nameLabel.text = name
+        nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        nameLabel.textColor = UIColor(hex: "#000")
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        let dosageLabel = UILabel()
+        dosageLabel.text = dosage
+        dosageLabel.font = UIFont.systemFont(ofSize: 8, weight: .semibold)
+        dosageLabel.textColor = UIColor(hex: "#A1A1A1")
+        dosageLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        labelsStackView.addArrangedSubview(nameLabel)
+        labelsStackView.addArrangedSubview(dosageLabel)
+
+        let timeLabel = UILabel()
+        timeLabel.text = time
+        timeLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        timeLabel.textColor = .white
+        timeLabel.textAlignment = .center
+        timeLabel.backgroundColor = UIColor(hex: "#196EB0")
+        timeLabel.layer.cornerRadius = 4
+        timeLabel.layer.masksToBounds = true
+        timeLabel.widthAnchor.constraint(equalToConstant: 64).isActive = true
+        timeLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        timeLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        stackView.addArrangedSubview(infoIcon)
+        stackView.addArrangedSubview(labelsStackView)
+        stackView.addArrangedSubview(timeLabel)
+
+        containerView.addSubview(stackView)
+
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
+            stackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+            stackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
+            stackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12)
+        ])
+
+        return containerView
+    }
+
+
+    @objc func infoIconTapped(_ sender: UITapGestureRecognizer) {
+        // infoIcon에서 AlarmView를 찾아내기 위해 반복적으로 상위 뷰를 탐색
+        var view = sender.view
+        while let superview = view?.superview {
+            if let alarmView = superview as? AlarmView {
+                // AlarmView에서 데이터를 가져옴
+                let name = alarmView.name ?? "Unknown"
+                let dosage = alarmView.dosage ?? "Unknown"
+                let date = alarmView.date ?? "Unknown Date"
+                let time = alarmView.time ?? "Unknown Time"
+                let documentID = alarmView.documentID ?? "" // 추가: documentID를 가져옴
+                
+                // AlarmDetailViewController로 데이터 전달
+                let detailVC = AlarmDetailViewController(medicationName: name, dosage: dosage, date: date, time: time, alarmDocumentID: documentID)
+                self.navigationController?.pushViewController(detailVC, animated: true)
+                return
+            }
+            view = superview
+        }
+        print("AlarmView를 찾을 수 없습니다.")
+    }
+
     private func setupNavigationBarTitleView() {
         // "알림" 텍스트 설정
         let titleLabel = UILabel()
@@ -220,32 +380,47 @@ class AlarmController: UIViewController {
         self.navigationItem.titleView = stackView
     }
 
-
     
     // 뷰를 서브뷰로 추가
     func setupViews() {
-        view.addSubview(dateContainerView)
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        
+        contentView.addSubview(dateContainerView)
         dateContainerView.addSubview(todayLabel)
         dateContainerView.addSubview(dateCollectionView)
         
-        view.addSubview(medContainerView)
+        contentView.addSubview(medContainerView)
         medContainerView.addSubview(todayMedLabel)
         medContainerView.addSubview(medCircleView)
         medCircleView.addSubview(pillImageView)
         medCircleView.addSubview(medCountLabel)
         medCircleView.addSubview(dayLabel)
         
-        view.addSubview(addButton)
-        view.addSubview(alarmStackView)
+        contentView.addSubview(addButton)
+        contentView.addSubview(alarmStackView)
     }
-    
+
     // 제약 조건 설정
     func setupConstraints() {
         NSLayoutConstraint.activate([
+            // 스크롤 뷰 설정
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            // 컨텐츠 뷰 설정
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
+            
             // dateContainerView 설정
-            dateContainerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            dateContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 22),
-            dateContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -22),
+            dateContainerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            dateContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 22),
+            dateContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -22),
             dateContainerView.heightAnchor.constraint(equalToConstant: 160),
             
             todayLabel.topAnchor.constraint(equalTo: dateContainerView.topAnchor, constant: 16),
@@ -257,10 +432,10 @@ class AlarmController: UIViewController {
             dateCollectionView.heightAnchor.constraint(equalToConstant: 85),
             
             // medContainerView 설정
-            medContainerView.topAnchor.constraint(equalTo: dateContainerView.bottomAnchor, constant: 40),
-            medContainerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 22),
-            medContainerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -22),
-            medContainerView.heightAnchor.constraint(equalToConstant: 360),  // 높이를 적절히 조정
+            medContainerView.topAnchor.constraint(equalTo: dateContainerView.bottomAnchor, constant: 20),
+            medContainerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 22),
+            medContainerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -22),
+            medContainerView.heightAnchor.constraint(equalToConstant: 360),
             
             todayMedLabel.topAnchor.constraint(equalTo: medContainerView.topAnchor, constant: 16),
             todayMedLabel.centerXAnchor.constraint(equalTo: medContainerView.centerXAnchor),
@@ -272,8 +447,8 @@ class AlarmController: UIViewController {
             
             pillImageView.topAnchor.constraint(equalTo: medCircleView.topAnchor, constant: 30),
             pillImageView.centerXAnchor.constraint(equalTo: medCircleView.centerXAnchor),
-            pillImageView.widthAnchor.constraint(equalToConstant: 52),  // 이미지 크기를 크게 설정
-            pillImageView.heightAnchor.constraint(equalToConstant: 52),  // 이미지 크기를 크게 설정
+            pillImageView.widthAnchor.constraint(equalToConstant: 52),
+            pillImageView.heightAnchor.constraint(equalToConstant: 52),
             
             medCountLabel.topAnchor.constraint(equalTo: pillImageView.bottomAnchor, constant: 20),
             medCountLabel.centerXAnchor.constraint(equalTo: medCircleView.centerXAnchor),
@@ -281,20 +456,20 @@ class AlarmController: UIViewController {
             dayLabel.topAnchor.constraint(equalTo: medCountLabel.bottomAnchor, constant: 10),
             dayLabel.centerXAnchor.constraint(equalTo: medCircleView.centerXAnchor),
             
-            // addButton 설정
-            addButton.widthAnchor.constraint(equalToConstant: 50),
-            addButton.heightAnchor.constraint(equalToConstant: 50),
-            addButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),  // 오른쪽으로 이동
-            addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -70),  // 약간 위로 올림
-            
             // alarmStackView 설정
             alarmStackView.topAnchor.constraint(equalTo: medContainerView.bottomAnchor, constant: 20),
-            alarmStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            alarmStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            alarmStackView.bottomAnchor.constraint(equalTo: addButton.topAnchor, constant: -20)
+            alarmStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            alarmStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            
+            // addButton 설정 (알람 스택 뷰 아래)
+            addButton.topAnchor.constraint(equalTo: alarmStackView.bottomAnchor, constant: 20),
+            addButton.widthAnchor.constraint(equalToConstant: 50),
+            addButton.heightAnchor.constraint(equalToConstant: 50),
+            addButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            addButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -100)  // contentView의 바닥에 연결
         ])
     }
-    
+
     // 날짜 데이터 설정 (오늘 날짜부터 앞으로 7일 및 지난 2일)
     func setupDates() {
         for i in -2...7 {
@@ -325,11 +500,12 @@ extension AlarmController: UICollectionViewDelegate, UICollectionViewDataSource,
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DateCell", for: indexPath) as! DateCollectionViewCell
         let date = dates[indexPath.item]
         
-        // 날짜와 요일 설정
+        // 날짜 설정
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "d"
         cell.dateLabel.text = dateFormatter.string(from: date)
         
+        // 요일 설정
         let dayFormatter = DateFormatter()
         dayFormatter.locale = Locale(identifier: "ko_KR")
         dayFormatter.dateFormat = "EEEE"  // 요일 전체 이름
@@ -337,12 +513,14 @@ extension AlarmController: UICollectionViewDelegate, UICollectionViewDataSource,
         
         // 오늘 날짜 셀을 기본적으로 선택 상태로 설정
         if Calendar.current.isDateInToday(date) {
+            dayLabel.text = dayFormatter.string(from: date) // dayLabel 업데이트
             cell.isSelected = true
             collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
         }
         
         return cell
     }
+
     
     // 컬렉션 뷰 셀 크기 설정
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -355,6 +533,16 @@ extension AlarmController: UICollectionViewDelegate, UICollectionViewDataSource,
             collectionView.deselectItem(at: previousIndexPath, animated: false)  // 이전에 선택된 셀을 선택 해제
         }
         selectedIndexPath = indexPath  // 현재 선택된 셀의 인덱스 경로를 저장
+        
+        // 선택한 날짜에 맞는 알람 데이터를 가져옴
+        let selectedDate = dates[indexPath.item]
+        fetchAlarms(for: selectedDate)
+        
+        // 선택된 날짜에 맞춰 dayLabel 업데이트
+            let dayFormatter = DateFormatter()
+            dayFormatter.locale = Locale(identifier: "ko_KR")
+            dayFormatter.dateFormat = "EEEE"  // 요일 전체 이름
+            dayLabel.text = dayFormatter.string(from: selectedDate)
     }
 }
 
@@ -375,7 +563,7 @@ extension AlarmController: AddMedViewControllerDelegate {
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 36)
         ])
         attributedText.append(NSAttributedString(string: "/\(currentCount)", attributes: [
-            NSAttributedString.Key.foregroundColor: UIColor(hex: "#00459C"),
+            NSAttributedString.Key.foregroundColor: UIColor(hex: "#196EB0"),
             NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 36)
         ]))
         medCountLabel.attributedText = attributedText
@@ -390,82 +578,11 @@ extension AlarmController: AddMedViewControllerDelegate {
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 36)
         ])
         attributedText.append(NSAttributedString(string: "/\(currentCount)", attributes: [
-            NSAttributedString.Key.foregroundColor: UIColor(hex: "#00459C"),
+            NSAttributedString.Key.foregroundColor: UIColor(hex: "#196EB0"),
             NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 36)
         ]))
         medCountLabel.attributedText = attributedText
     }
-}
-
-// 알람 뷰를 생성하는 함수
-func createAlarmView(name: String, dosage: String, date: String, time: String) -> UIView {
-    let containerView = UIView()
-    containerView.translatesAutoresizingMaskIntoConstraints = false
-    containerView.heightAnchor.constraint(equalToConstant: 64).isActive = true
-    containerView.layer.cornerRadius = 12
-    containerView.layer.borderWidth = 1
-    containerView.layer.borderColor = UIColor(hex: "#EAECF0").cgColor
-    containerView.backgroundColor = UIColor.white  // 표준 흰색 배경색 사용
-    
-    let stackView = UIStackView()
-    stackView.axis = .horizontal
-    stackView.spacing = 8
-    stackView.alignment = .center
-    stackView.translatesAutoresizingMaskIntoConstraints = false
-    
-    let infoIcon = UIImageView(image: UIImage(systemName: "info.circle.fill"))
-    infoIcon.tintColor = UIColor(hex: "#FBBC05")
-    infoIcon.translatesAutoresizingMaskIntoConstraints = false
-    infoIcon.widthAnchor.constraint(equalToConstant: 24).isActive = true
-    infoIcon.heightAnchor.constraint(equalToConstant: 24).isActive = true
-    
-    let labelsStackView = UIStackView()
-    labelsStackView.axis = .vertical
-    labelsStackView.spacing = 4
-    labelsStackView.alignment = .leading
-    labelsStackView.translatesAutoresizingMaskIntoConstraints = false
-    
-    let nameLabel = UILabel()
-    nameLabel.text = name
-    nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-    nameLabel.textColor = UIColor(hex: "#000")
-    nameLabel.translatesAutoresizingMaskIntoConstraints = false
-    
-    let dosageLabel = UILabel()
-    dosageLabel.text = dosage
-    dosageLabel.font = UIFont.systemFont(ofSize: 8, weight: .semibold)
-    dosageLabel.textColor = UIColor(hex: "#A1A1A1")
-    dosageLabel.translatesAutoresizingMaskIntoConstraints = false
-    
-    labelsStackView.addArrangedSubview(nameLabel)
-    labelsStackView.addArrangedSubview(dosageLabel)
-    
-    let timeLabel = UILabel()
-    timeLabel.text = time
-    timeLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
-    timeLabel.textColor = .white
-    timeLabel.textAlignment = .center
-    timeLabel.backgroundColor = UIColor(hex: "#00459C")
-    timeLabel.layer.cornerRadius = 4
-    timeLabel.layer.masksToBounds = true
-    timeLabel.widthAnchor.constraint(equalToConstant: 64).isActive = true
-    timeLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
-    timeLabel.translatesAutoresizingMaskIntoConstraints = false
-    
-    stackView.addArrangedSubview(infoIcon)
-    stackView.addArrangedSubview(labelsStackView)
-    stackView.addArrangedSubview(timeLabel)
-    
-    containerView.addSubview(stackView)
-    
-    NSLayoutConstraint.activate([
-        stackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-        stackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-        stackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 12),
-        stackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12)
-    ])
-    
-    return containerView
 }
 
 // 알림을 스케줄링하는 함수
@@ -499,3 +616,5 @@ func scheduleNotification(name: String, time: String) {
         }
     }
 }
+
+

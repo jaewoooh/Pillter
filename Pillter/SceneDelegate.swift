@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(windowScene: windowScene)
         
         // LaunchScreen을 위한 초기 뷰 컨트롤러 설정
-        let launchScreenVC = UIStoryboard(name: "Launch Screen", bundle: nil).instantiateInitialViewController()!
+        let launchScreenVC = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()!
         window?.rootViewController = launchScreenVC
         window?.makeKeyAndVisible()
         

@@ -4,6 +4,7 @@ import Firebase       // Firebase import
 import FirebaseFirestore
 import FirebaseStorage
 
+//var databasePointer: OpaquePointer?
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
@@ -30,6 +31,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         
+//        if let dbPointer = DBHelper.getDatabasePointer(databaseName: "PillterDB.db")
+//        {
+//            databasePointer = dbPointer
+//            DBHelper.shared.initialize(databasePointer: dbPointer)
+//        }
+//        else
+//        {
+//            print("데이터베이스를 찾지못함")
+//        }
+//
         return true
     }
 
