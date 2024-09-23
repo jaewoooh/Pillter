@@ -1,5 +1,3 @@
-//DateCollectionViewCell
-
 import UIKit
 
 class DateCollectionViewCell: UICollectionViewCell {

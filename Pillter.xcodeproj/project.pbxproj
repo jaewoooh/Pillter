@@ -33,9 +33,20 @@
 		195362F52C76DAFA0092BFB9 /* SUITE-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 195362EE2C76DAFA0092BFB9 /* SUITE-Heavy.otf */; };
 		195362F72C76DBCE0092BFB9 /* SUITE-Variable.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 195362F62C76DBCE0092BFB9 /* SUITE-Variable.ttf */; };
 		195362F92C76EFF20092BFB9 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 195362F82C76EFF20092BFB9 /* FirebaseFirestoreCombine-Community */; };
+		19AF25622CA17C25002B4355 /* PillInfo.json in Resources */ = {isa = PBXBuildFile; fileRef = 19AF25612CA17C25002B4355 /* PillInfo.json */; };
+		19AF25642CA17C3F002B4355 /* LoadPillJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF25632CA17C3F002B4355 /* LoadPillJson.swift */; };
+		19AF25662CA17C78002B4355 /* PillsInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF25652CA17C78002B4355 /* PillsInfo.swift */; };
+		19AF25682CA17C90002B4355 /* HomeKeyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF25672CA17C90002B4355 /* HomeKeyboard.swift */; };
+		19AF256A2CA17CE0002B4355 /* LocationManagerCustom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF25692CA17CE0002B4355 /* LocationManagerCustom.swift */; };
+		19AF256C2CA17D48002B4355 /* AlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF256B2CA17D48002B4355 /* AlarmView.swift */; };
+		19AF256E2CA17D60002B4355 /* AlarmDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF256D2CA17D60002B4355 /* AlarmDetailViewController.swift */; };
+		19AF25702CA17D7C002B4355 /* MyPageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF256F2CA17D7C002B4355 /* MyPageTableView.swift */; };
 		19C990802C8709470049BA2C /* LoadJason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C9907F2C8709470049BA2C /* LoadJason.swift */; };
 		19C990822C8709E10049BA2C /* LocationKeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C990812C8709E10049BA2C /* LocationKeyBoard.swift */; };
 		19C990842C870A100049BA2C /* SeoulPharmacy.json in Resources */ = {isa = PBXBuildFile; fileRef = 19C990832C870A100049BA2C /* SeoulPharmacy.json */; };
+		19CCBB7D2CA15D8600659935 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CCBB7C2CA15D8600659935 /* SearchViewController.swift */; };
+		19CCBB7F2CA15D9E00659935 /* ZoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CCBB7E2CA15D9E00659935 /* ZoomViewController.swift */; };
+		19CCBB812CA15DBD00659935 /* PharmacyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CCBB802CA15DBD00659935 /* PharmacyViewController.swift */; };
 		19D83E102C75B79B0034BE1F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E0F2C75B79B0034BE1F /* FirebaseAnalytics */; };
 		19D83E122C75B79E0034BE1F /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E112C75B79E0034BE1F /* FirebaseAnalyticsOnDeviceConversion */; };
 		19D83E142C75B7A30034BE1F /* FirebaseAppCheck in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E132C75B7A30034BE1F /* FirebaseAppCheck */; };
@@ -44,7 +55,6 @@
 		19D83E1A2C75B7B60034BE1F /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E192C75B7B60034BE1F /* FirebaseDatabase */; };
 		19D83E1C2C75B7BE0034BE1F /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E1B2C75B7BE0034BE1F /* FirebaseFirestore */; };
 		19D83E1E2C75B7C40034BE1F /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 19D83E1D2C75B7C40034BE1F /* FirebaseStorage */; };
-		19F6DE4D2C75BA2D0074B6A7 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19F6DE4C2C75BA2D0074B6A7 /* Launch Screen.storyboard */; };
 		19F6DE4F2C75BAE30074B6A7 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F6DE4E2C75BAE20074B6A7 /* CustomTabBarController.swift */; };
 		19F6DE522C75BBB30074B6A7 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F6DE512C75BBB30074B6A7 /* HomeController.swift */; };
 		19F6DE542C75BBD40074B6A7 /* AlarmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F6DE532C75BBD40074B6A7 /* AlarmController.swift */; };
@@ -93,10 +103,20 @@
 		195362ED2C76DAFA0092BFB9 /* SUITE-ExtraBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-ExtraBold.otf"; sourceTree = "<group>"; };
 		195362EE2C76DAFA0092BFB9 /* SUITE-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-Heavy.otf"; sourceTree = "<group>"; };
 		195362F62C76DBCE0092BFB9 /* SUITE-Variable.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUITE-Variable.ttf"; sourceTree = "<group>"; };
+		19AF25612CA17C25002B4355 /* PillInfo.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PillInfo.json; sourceTree = "<group>"; };
+		19AF25632CA17C3F002B4355 /* LoadPillJson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoadPillJson.swift; path = Pillter/Home/LoadPillJson.swift; sourceTree = SOURCE_ROOT; };
+		19AF25652CA17C78002B4355 /* PillsInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillsInfo.swift; sourceTree = "<group>"; };
+		19AF25672CA17C90002B4355 /* HomeKeyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeKeyboard.swift; sourceTree = "<group>"; };
+		19AF25692CA17CE0002B4355 /* LocationManagerCustom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerCustom.swift; sourceTree = "<group>"; };
+		19AF256B2CA17D48002B4355 /* AlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmView.swift; sourceTree = "<group>"; };
+		19AF256D2CA17D60002B4355 /* AlarmDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDetailViewController.swift; sourceTree = "<group>"; };
+		19AF256F2CA17D7C002B4355 /* MyPageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableView.swift; sourceTree = "<group>"; };
 		19C9907F2C8709470049BA2C /* LoadJason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadJason.swift; sourceTree = "<group>"; };
 		19C990812C8709E10049BA2C /* LocationKeyBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationKeyBoard.swift; sourceTree = "<group>"; };
 		19C990832C870A100049BA2C /* SeoulPharmacy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SeoulPharmacy.json; sourceTree = "<group>"; };
-		19F6DE4C2C75BA2D0074B6A7 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		19CCBB7C2CA15D8600659935 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		19CCBB7E2CA15D9E00659935 /* ZoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomViewController.swift; sourceTree = "<group>"; };
+		19CCBB802CA15DBD00659935 /* PharmacyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PharmacyViewController.swift; sourceTree = "<group>"; };
 		19F6DE4E2C75BAE20074B6A7 /* CustomTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		19F6DE512C75BBB30074B6A7 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
 		19F6DE532C75BBD40074B6A7 /* AlarmController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmController.swift; sourceTree = "<group>"; };
@@ -168,7 +188,6 @@
 				195362C42C765D600092BFB9 /* Alarm */,
 				195362C52C765DAC0092BFB9 /* MyPage */,
 				193FC46C2C75B4D300C03E29 /* Main.storyboard */,
-				19F6DE4C2C75BA2D0074B6A7 /* Launch Screen.storyboard */,
 				193FC46F2C75B4D400C03E29 /* Assets.xcassets */,
 				193FC4742C75B4D400C03E29 /* Info.plist */,
 			);
@@ -180,6 +199,10 @@
 			children = (
 				19F6DE512C75BBB30074B6A7 /* HomeController.swift */,
 				195362BF2C7653F00092BFB9 /* PillInfoViewController.swift */,
+				19AF25652CA17C78002B4355 /* PillsInfo.swift */,
+				19AF25632CA17C3F002B4355 /* LoadPillJson.swift */,
+				19AF25672CA17C90002B4355 /* HomeKeyboard.swift */,
+				19AF25612CA17C25002B4355 /* PillInfo.json */,
 				195362CB2C7699600092BFB9 /* Home_anicon.gif */,
 			);
 			path = Home;
@@ -189,10 +212,14 @@
 			isa = PBXGroup;
 			children = (
 				19F6DE5F2C75BCD90074B6A7 /* LocationController.swift */,
+				19CCBB7C2CA15D8600659935 /* SearchViewController.swift */,
+				19CCBB7E2CA15D9E00659935 /* ZoomViewController.swift */,
+				19CCBB802CA15DBD00659935 /* PharmacyViewController.swift */,
 				192ECD142C94853700414587 /* PharmacyStruct.swift */,
 				1930F5CB2C7C377D00FE3F93 /* PharmacyUI.swift */,
 				192ECD162C94855F00414587 /* SetAuthorization.swift */,
 				192ECD182C94858000414587 /* MapViewCustom.swift */,
+				19AF25692CA17CE0002B4355 /* LocationManagerCustom.swift */,
 				19C9907F2C8709470049BA2C /* LoadJason.swift */,
 				19C990812C8709E10049BA2C /* LocationKeyBoard.swift */,
 				19C990832C870A100049BA2C /* SeoulPharmacy.json */,
@@ -223,6 +250,8 @@
 				19F6DE532C75BBD40074B6A7 /* AlarmController.swift */,
 				19F6DE572C75BBF60074B6A7 /* DateCollectionViewCell.swift */,
 				19F6DE592C75BC180074B6A7 /* AddMedViewControllerDelegate.swift */,
+				19AF256B2CA17D48002B4355 /* AlarmView.swift */,
+				19AF256D2CA17D60002B4355 /* AlarmDetailViewController.swift */,
 				195362CD2C769A550092BFB9 /* Alarm_anicon.gif */,
 				19F6DE792C75BEFC0074B6A7 /* GoogleService-Info.plist */,
 			);
@@ -233,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				19F6DE552C75BBE30074B6A7 /* MyPageController.swift */,
+				19AF256F2CA17D7C002B4355 /* MyPageTableView.swift */,
 				195362CF2C769A9C0092BFB9 /* Pill_anicon.gif */,
 			);
 			path = MyPage;
@@ -350,10 +380,10 @@
 			files = (
 				195362F22C76DAFA0092BFB9 /* SUITE-Medium.otf in Resources */,
 				195362D72C76A3380092BFB9 /* Cafe24Decobox.ttf in Resources */,
+				19AF25622CA17C25002B4355 /* PillInfo.json in Resources */,
 				195362F72C76DBCE0092BFB9 /* SUITE-Variable.ttf in Resources */,
 				195362EF2C76DAFA0092BFB9 /* SUITE-Regular.otf in Resources */,
 				195362F02C76DAFA0092BFB9 /* SUITE-SemiBold.otf in Resources */,
-				19F6DE4D2C75BA2D0074B6A7 /* Launch Screen.storyboard in Resources */,
 				195362F32C76DAFA0092BFB9 /* SUITE-Light.otf in Resources */,
 				195362D52C76A3300092BFB9 /* SOYO Maple Bold.otf in Resources */,
 				195362D02C769A9C0092BFB9 /* Pill_anicon.gif in Resources */,
@@ -379,27 +409,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				19F6DE702C75BD850074B6A7 /* ChatView.swift in Sources */,
+				19CCBB812CA15DBD00659935 /* PharmacyViewController.swift in Sources */,
 				19F6DE602C75BCD90074B6A7 /* LocationController.swift in Sources */,
 				19F6DE5E2C75BC3E0074B6A7 /* ChatFinalController.swift in Sources */,
 				19F6DE562C75BBE30074B6A7 /* MyPageController.swift in Sources */,
 				19F6DE522C75BBB30074B6A7 /* HomeController.swift in Sources */,
+				19AF25682CA17C90002B4355 /* HomeKeyboard.swift in Sources */,
 				19F6DE542C75BBD40074B6A7 /* AlarmController.swift in Sources */,
 				19F6DE6E2C75BD7E0074B6A7 /* ChatService.swift in Sources */,
 				1930F5CC2C7C377D00FE3F93 /* PharmacyUI.swift in Sources */,
 				192ECD192C94858000414587 /* MapViewCustom.swift in Sources */,
 				192ECD172C94855F00414587 /* SetAuthorization.swift in Sources */,
+				19AF256C2CA17D48002B4355 /* AlarmView.swift in Sources */,
 				193FC4672C75B4D300C03E29 /* AppDelegate.swift in Sources */,
 				19F6DE5C2C75BC2A0074B6A7 /* UIColor.swift in Sources */,
 				19F6DE6A2C75BD620074B6A7 /* ChatBubble.swift in Sources */,
 				19C990822C8709E10049BA2C /* LocationKeyBoard.swift in Sources */,
 				19F6DE622C75BCEC0074B6A7 /* ChatBotController.swift in Sources */,
+				19AF256A2CA17CE0002B4355 /* LocationManagerCustom.swift in Sources */,
 				19C990802C8709470049BA2C /* LoadJason.swift in Sources */,
 				195362C02C7653F00092BFB9 /* PillInfoViewController.swift in Sources */,
 				19F6DE662C75BD470074B6A7 /* APIKey.swift in Sources */,
 				19F6DE4F2C75BAE30074B6A7 /* CustomTabBarController.swift in Sources */,
+				19AF25702CA17D7C002B4355 /* MyPageTableView.swift in Sources */,
 				193FC4692C75B4D300C03E29 /* SceneDelegate.swift in Sources */,
 				19F6DE6C2C75BD700074B6A7 /* ChatBubbleShape.swift in Sources */,
+				19CCBB7F2CA15D9E00659935 /* ZoomViewController.swift in Sources */,
+				19AF25642CA17C3F002B4355 /* LoadPillJson.swift in Sources */,
 				195362CA2C7698F80092BFB9 /* UIImage+GIF.swift in Sources */,
+				19CCBB7D2CA15D8600659935 /* SearchViewController.swift in Sources */,
+				19AF256E2CA17D60002B4355 /* AlarmDetailViewController.swift in Sources */,
+				19AF25662CA17C78002B4355 /* PillsInfo.swift in Sources */,
 				19F6DE5A2C75BC180074B6A7 /* AddMedViewControllerDelegate.swift in Sources */,
 				192ECD152C94853700414587 /* PharmacyStruct.swift in Sources */,
 				19F6DE642C75BD300074B6A7 /* ChatExplainController.swift in Sources */,

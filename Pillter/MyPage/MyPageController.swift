@@ -9,27 +9,58 @@ import UIKit
 
 class MyPageController: UIViewController {
 
-    // UI Components
-    let titleLabel = UILabel()
+    // UI 구성
+    var titleLabel: UILabel =
+    {
+        let titleLabel = UILabel()
+        
+        titleLabel.text = "나의 약통"
+        titleLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        titleLabel.textColor = .black
+        titleLabel.textAlignment = .left
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+        return titleLabel
+    }()
+
+    var tableView = UITableView()
+
     let emptyStateImageView = UIImageView()
     let emptyStateMessageLabel = UILabel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        layoutUI()
         
+        view.addSubview(titleLabel)
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+        ])
+        
+        
+        if pillList.isEmpty
+        {
+            setupUI()
+        }
+        else
+        {
+            setTableView()
+        }
+        setTableView()
+        setupTableView() //테이블뷰 setup
         //네비게이션바 애니메이션효과 추가
         setupNavigationBarTitleView()
+        
     }
 
     //네비게이션바 애니메이션 효과 기능 함수
     private func setupNavigationBarTitleView() {
         // "Pill List" 텍스트 설정
-        let titleLabel = UILabel()
-        titleLabel.text = "Pill List"
-        titleLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
-        titleLabel.textColor = UIColor.black // 텍스트 색상 설정
+        let navTitleLabel = UILabel()
+        navTitleLabel.text = "Pill List"
+        navTitleLabel.font = UIFont.systemFont(ofSize: 17, weight: .medium)
+        navTitleLabel.textColor = UIColor.black // 텍스트 색상 설정
         
         // GIF 이미지 설정
         let animatedImageView = UIImageView()
@@ -43,7 +74,7 @@ class MyPageController: UIViewController {
         }
         
         // 스택 뷰 설정 (Label과 ImageView를 수평으로 배치)
-        let stackView = UIStackView(arrangedSubviews: [titleLabel, animatedImageView])
+        let stackView = UIStackView(arrangedSubviews: [navTitleLabel, animatedImageView])
         stackView.axis = .horizontal
         stackView.spacing = 8 // 텍스트와 이미지 간의 간격 설정
         stackView.alignment = .center
@@ -51,44 +82,24 @@ class MyPageController: UIViewController {
         // 스택 뷰를 네비게이션 바의 타이틀 뷰로 설정
         self.navigationItem.titleView = stackView
     }
-
     
+    //테이블 뷰가 비어있으면 나타나는 함수
     private func setupUI() {
         view.backgroundColor = .white
-        
-        // Title Label Configuration
-        titleLabel.text = "나의 약통"
-        titleLabel.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        titleLabel.textColor = .black
-        titleLabel.textAlignment = .left // Change to left alignment
-        
+
         // Empty State Image View Configuration
         emptyStateImageView.image = UIImage(named: "mypage")
         emptyStateImageView.contentMode = .scaleAspectFit
         
         // Empty State Message Label Configuration
-        emptyStateMessageLabel.text = """
-        이 프로젝트에는 아직 작업이 없습니다.
-        작업을 추가해 주세요.
-        """
+        emptyStateMessageLabel.text = "검색한 약이 없습니다."
         emptyStateMessageLabel.font = UIFont.systemFont(ofSize: 16)
         emptyStateMessageLabel.textColor = .black
         emptyStateMessageLabel.textAlignment = .center
         emptyStateMessageLabel.numberOfLines = 0
-    }
-
-    private func layoutUI() {
-        view.addSubview(titleLabel)
+        
         view.addSubview(emptyStateImageView)
         view.addSubview(emptyStateMessageLabel)
-        
-        // Title Label Constraints
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
-        ])
         
         // Empty State Image View Constraints
         emptyStateImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -107,5 +118,23 @@ class MyPageController: UIViewController {
             emptyStateMessageLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
     }
+    
+    //테이블 뷰가 존재하면 나타나는 함수
+    private func setTableView()
+    {
+        view.addSubview(tableView)
+
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            
+        ])
+        tableView.reloadData()
+        
+
+    }
+    
 }
 

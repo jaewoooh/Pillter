@@ -2,7 +2,17 @@ import UIKit
 
 class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    private var pillActionBtn = false // 알약 타입을 눌러야만 다음으로 넘어가짐
+    let pillInfoView = PillInfoViewController()
+    
+    var pillDataWrapper: PillDataWrapper? //약관련
+    var frontText: String? //식별정보 앞내용
+    var backText: String? //식별정보 뒤내용
+    var shapeType: String? //모양
+
+    
+    var pillActionBtn = false // 알약 타입을 눌러야만 다음으로 넘어가짐
+    var infoFlag = false //식별정보 생략,저장
+    
     let scrollView = UIScrollView()
     let contentView = UIView()
     
@@ -33,9 +43,9 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
     let accordionButton = UIButton(type: .system)
     let accordionView = UIStackView()
     let frontLabel = UILabel()
-    let frontTextField = UITextField()
+    let frontTextField = UITextField() //식별정보 앞
     let backLabel = UILabel()
-    let backTextField = UITextField()
+    let backTextField = UITextField() //식별정보 뒤
     
     // 생략 및 저장 버튼 추가
     let skipButton = UIButton(type: .system)
@@ -55,10 +65,11 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
         super.viewDidLoad()
         setupUI()
         layoutUI()
+        loadPillJson()
         
         // 네비게이션 바 타이틀 설정
         setupNavigationBarTitleView()
-        
+        // 화면을 터치했을 때 키보드를 숨기기 위한 탭 제스처 설정
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
     }
@@ -239,7 +250,8 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
         step2LineViewBottom.heightAnchor.constraint(equalToConstant: 18).isActive = true
 
         // infoLabel 설정
-        infoLabel.text = "식별 정보를 입력해주시면 정확도가 향상됩니다."
+//        infoLabel.text = "식별 정보를 입력해주시면 정확도가 향상됩니다. \n영어, 숫자만 입력해주시고 모든글자를 붙여서 입력해주세요."
+        infoLabel.text = "영어, 숫자만 입력해주시고 모든글자를 붙여서 입력해주세요."
         infoLabel.font = UIFont(name: "SOYO Maple Bold", size: 12)
         infoLabel.textColor = UIColor(hexCode: "#777777")
         infoLabel.numberOfLines = 1
@@ -297,7 +309,7 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
         accordionButton.setImage(chevronDownImage, for: .normal)
         accordionButton.semanticContentAttribute = .forceLeftToRight
         accordionButton.imageEdgeInsets = UIEdgeInsets(top: 4, left: -5, bottom: 4, right: 0)
-        accordionButton.setTitle("식별 정보", for: .normal)
+        accordionButton.setTitle("식별 정보(없는 경우 x를 입력해주세요)", for: .normal)
         accordionButton.setTitleColor(.black, for: .normal)
         accordionButton.contentHorizontalAlignment = .left
         accordionButton.titleLabel?.font = UIFont(name: "SOYO Maple Bold", size: 15)
@@ -467,11 +479,6 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         pillImageView.translatesAutoresizingMaskIntoConstraints = false
     }
-    
-    //키보드 사라지기
-    @objc func dismissKeyboard(){
-        view.endEditing(true)
-    }
 
     // 아코디언 버튼 클릭 이벤트 처리
     @objc private func toggleAccordion() {
@@ -485,8 +492,13 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @objc private func skipButtonTapped() {
         updateButtonStyles(isSaveButtonSelected: false)
         updateStep2Style()
-        frontTextField.isEnabled = false
-        backTextField.isEnabled = false
+        frontTextField.isEnabled = true
+        backTextField.isEnabled = true
+        
+        frontTextField.text = ""
+        backTextField.text = ""
+        infoFlag = false
+        print(infoFlag)
     }
 
     // 저장 버튼 클릭 이벤트 처리
@@ -495,6 +507,19 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
         updateStep2Style()
         frontTextField.isEnabled = true
         backTextField.isEnabled = true
+        frontText = frontTextField.text
+        backText = backTextField.text
+        
+        if (frontText?.isEmpty == false || backText?.isEmpty == false) {
+            infoFlag = true
+            print(infoFlag)
+            print("Front Text: \(frontText ?? "")")
+            print("Back Text: \(backText ?? "")")
+        } else {
+            infoFlag = false
+            print(infoFlag)
+        }
+        
     }
 
     // 촬영하기 버튼 클릭 이벤트 처리
@@ -526,10 +551,14 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
         
-        if let image = info[.originalImage] as? UIImage {
+        if info[.originalImage] is UIImage {
             // 촬영된 또는 선택된 이미지를 다음 화면에 전달하고 화면 전환
             let pillInfoVC = PillInfoViewController()
-            pillInfoVC.pillImage = image
+            //pillInfoVC.pillImage = image
+            pillInfoVC.fDescription = frontText
+            pillInfoVC.bDescription = backText
+            pillInfoVC.flag = infoFlag
+            pillInfoVC.shapeType = shapeType
             navigationController?.pushViewController(pillInfoVC, animated: true)
         }
     }
@@ -542,7 +571,7 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
     private func layoutUI() {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 0),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 4),
+            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
 
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 5),
             descriptionLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
@@ -595,6 +624,8 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
         for (index, shape) in shapes.enumerated() {
             let button = createShapeButton(with: shape.0, imageName: shape.1)
+            
+            button.accessibilityIdentifier = shape.0
 
             if index < 3 {
                 firstRowStackView.addArrangedSubview(button)
@@ -671,7 +702,7 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     // Step2 스타일 업데이트
     private func updateStep2Style() {
-        let step2CircleView = step2StackView.arrangedSubviews.first as! UIView
+        let step2CircleView = step2StackView.arrangedSubviews.first!
         step2CircleView.backgroundColor = UIColor(red: 0, green: 0.271, blue: 0.612, alpha: 1)
         step2NumberLabel.textColor = .white
         step2NumberLabel.text = "✔︎"
@@ -680,7 +711,7 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // Step3 스타일 업데이트
     private func updateStep3Style() {
         step3NumberLabel.text = "✔︎"
-        let step3CircleView = step3StackView.arrangedSubviews.first as! UIView
+        let step3CircleView = step3StackView.arrangedSubviews.first!
         step3CircleView.backgroundColor = UIColor(red: 0, green: 0.271, blue: 0.612, alpha: 1)
         step3NumberLabel.textColor = .white
     }
@@ -699,7 +730,10 @@ class HomeController: UIViewController, UIImagePickerControllerDelegate, UINavig
 
         // step1NumberLabel을 체크 표시로 변경
         step1NumberLabel.text = "✔︎"
-
+        
+        // 선택된 버튼의 모양 이름을 shapeType에 저장
+        shapeType = sender.accessibilityIdentifier
+        print(shapeType!)
         // 현재 선택된 버튼으로 설정
         selectedButton = sender
         

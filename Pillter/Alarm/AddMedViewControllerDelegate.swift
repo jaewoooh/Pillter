@@ -1,5 +1,3 @@
-//AddMedViewControllerDelegate
-
 import UIKit
 import FirebaseFirestore
 import UserNotifications
@@ -50,14 +48,14 @@ class AddMedViewController: UIViewController {
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "이름"
+        label.text = "약 이름"
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     let nameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "약 이름 (예시. 타이레놀)"
+        textField.placeholder = "타이레놀"
         textField.borderStyle = .roundedRect
         textField.layer.borderColor = UIColor(hex: "#9D9D9D").cgColor
         textField.layer.borderWidth = 1
@@ -75,7 +73,7 @@ class AddMedViewController: UIViewController {
     
     let dosageTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "복용량 (예시. 2알)"
+        textField.placeholder = "2알"
         textField.borderStyle = .roundedRect
         textField.layer.borderColor = UIColor(hex: "#9D9D9D").cgColor
         textField.layer.borderWidth = 1
@@ -100,7 +98,7 @@ class AddMedViewController: UIViewController {
     
     let dateTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "MM월 dd일"
+        textField.placeholder = "MM월 DD일"
         textField.borderStyle = .roundedRect
         textField.layer.borderColor = UIColor(hex: "#DDD").cgColor
         textField.layer.borderWidth = 1
@@ -112,7 +110,7 @@ class AddMedViewController: UIViewController {
     
     let timeTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "HH:mm"
+        textField.placeholder = "HH:MM"
         textField.borderStyle = .roundedRect
         textField.layer.borderColor = UIColor(hex: "#DDD").cgColor
         textField.layer.borderWidth = 1
@@ -135,7 +133,7 @@ class AddMedViewController: UIViewController {
         label.text = "알람 켜기"
         label.textColor = UIColor(hex: "#000")
         label.font = UIFont(name: "Open Sans", size: 12)
-        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -241,6 +239,7 @@ class AddMedViewController: UIViewController {
         gradientLayer.locations = [0.0, 1.0]
         gradientLayer.frame = view.bounds
         view.layer.insertSublayer(gradientLayer, at: 0)
+
         view.backgroundColor = .white
         
         setupDateData()
@@ -251,16 +250,10 @@ class AddMedViewController: UIViewController {
         setupViews()
         setupConstraints()
         
-        // 빈 화면 터치 시 키보드를 내리는 제스쳐 추가
+        // 화면을 터치했을 때 키보드를 숨기기 위한 탭 제스처 설정
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
     }
-    
-    // 키보드 사라지는 기능
-    @objc func dismissKeyboard(){
-        view.endEditing(true)
-    }
-    
     
     func setupDateData() {
         let calendar = Calendar.current
@@ -312,7 +305,7 @@ class AddMedViewController: UIViewController {
             descriptionLabel.topAnchor.constraint(equalTo: addAlarmLabel.bottomAnchor, constant: 8),
             descriptionLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             
-            nameLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 20),
+            nameLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 35),
             nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             
             nameTextField.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10),
@@ -357,8 +350,8 @@ class AddMedViewController: UIViewController {
             
             saveButton.topAnchor.constraint(equalTo: switchContainerView.bottomAnchor, constant: 40),
             saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            saveButton.widthAnchor.constraint(equalToConstant: 115),
-            saveButton.heightAnchor.constraint(equalToConstant: 34),
+            saveButton.widthAnchor.constraint(equalToConstant: 130),
+            saveButton.heightAnchor.constraint(equalToConstant: 45),
             
             datePickerContainerView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             datePickerContainerView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -383,13 +376,13 @@ class AddMedViewController: UIViewController {
             
             cancelButton.leadingAnchor.constraint(equalTo: datePickerContainerView.leadingAnchor, constant: 20),
             cancelButton.bottomAnchor.constraint(equalTo: datePickerContainerView.bottomAnchor, constant: -20),
-            cancelButton.widthAnchor.constraint(equalToConstant: 116),
-            cancelButton.heightAnchor.constraint(equalToConstant: 56),
+            cancelButton.widthAnchor.constraint(equalToConstant: 125),
+            cancelButton.heightAnchor.constraint(equalToConstant: 45),
             
             saveDateButton.trailingAnchor.constraint(equalTo: datePickerContainerView.trailingAnchor, constant: -20),
             saveDateButton.bottomAnchor.constraint(equalTo: datePickerContainerView.bottomAnchor, constant: -20),
-            saveDateButton.widthAnchor.constraint(equalToConstant: 148),
-            saveDateButton.heightAnchor.constraint(equalToConstant: 56)
+            saveDateButton.widthAnchor.constraint(equalToConstant: 125),
+            saveDateButton.heightAnchor.constraint(equalToConstant: 45)
         ])
     }
 
@@ -417,6 +410,7 @@ class AddMedViewController: UIViewController {
     }
     
     @objc func saveDateButtonTapped() {
+        
         if activeTextField == dateTextField {
             let selectedDate = dates[datePicker.selectedRow(inComponent: 0)]
             dateTextField.text = selectedDate
@@ -431,11 +425,26 @@ class AddMedViewController: UIViewController {
 
     
     @objc func saveButtonTapped() {
-        guard let name = nameTextField.text, !name.isEmpty,
-              let dosage = dosageTextField.text, !dosage.isEmpty,
-              let date = dateTextField.text, !date.isEmpty,
-              let time = timeTextField.text, !time.isEmpty else {
-            return
+        
+        // 필수 항목들이 입력되었는지 확인
+            guard let name = nameTextField.text, !name.isEmpty else {
+                showAlert(message: "약 이름을 작성해주세요!")
+                return
+            }
+            
+            guard let dosage = dosageTextField.text, !dosage.isEmpty else {
+                showAlert(message: "복용량을 작성해주세요!")
+                return
+            }
+            
+            guard let date = dateTextField.text, !date.isEmpty else {
+                showAlert(message: "알림 날짜를 선택해주세요!")
+                return
+            }
+            
+            guard let time = timeTextField.text, !time.isEmpty else {
+                showAlert(message: "알림 시간을 선택해주세요!")
+                return
         }
         
         let alarmData: [String: Any] = [
@@ -505,5 +514,18 @@ extension AddMedViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         label.font = UIFont.systemFont(ofSize: 14)
         
         return label
+    }
+    
+    // 경고창을 띄우는 함수
+    func showAlert(message: String) {
+        let alertController = UIAlertController(title: "경고", message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "확인", style: .default, handler: nil)
+        alertController.addAction(okAction)
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    // MARK: 키보드
+    @objc func dismissKeyboard() {
+        view.endEditing(true) // 키보드 내리기
     }
 }
