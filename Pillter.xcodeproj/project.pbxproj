@@ -42,6 +42,13 @@
 		19AF256E2CA17D60002B4355 /* AlarmDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF256D2CA17D60002B4355 /* AlarmDetailViewController.swift */; };
 		19AF25702CA17D7C002B4355 /* MyPageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF256F2CA17D7C002B4355 /* MyPageTableView.swift */; };
 		19AF25722CA180E8002B4355 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19AF25712CA180E8002B4355 /* LaunchScreen.storyboard */; };
+		19AF258B2CA339F9002B4355 /* DBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF258A2CA339F9002B4355 /* DBHelper.swift */; };
+		19AF258D2CA33A04002B4355 /* PillModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF258C2CA33A04002B4355 /* PillModel.swift */; };
+		19AF25902CA33A97002B4355 /* LocationCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF258F2CA33A97002B4355 /* LocationCalculator.swift */; };
+		19AF25922CA33AAF002B4355 /* NaviationBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF25912CA33AAF002B4355 /* NaviationBarController.swift */; };
+		19AF25942CA33AC1002B4355 /* SubwaySearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF25932CA33AC1002B4355 /* SubwaySearchController.swift */; };
+		19AF25972CA33E64002B4355 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 19AF25962CA33E64002B4355 /* Realm */; };
+		19AF25992CA33E64002B4355 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 19AF25982CA33E64002B4355 /* RealmSwift */; };
 		19C990802C8709470049BA2C /* LoadJason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C9907F2C8709470049BA2C /* LoadJason.swift */; };
 		19C990822C8709E10049BA2C /* LocationKeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C990812C8709E10049BA2C /* LocationKeyBoard.swift */; };
 		19C990842C870A100049BA2C /* SeoulPharmacy.json in Resources */ = {isa = PBXBuildFile; fileRef = 19C990832C870A100049BA2C /* SeoulPharmacy.json */; };
@@ -113,6 +120,11 @@
 		19AF256D2CA17D60002B4355 /* AlarmDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDetailViewController.swift; sourceTree = "<group>"; };
 		19AF256F2CA17D7C002B4355 /* MyPageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableView.swift; sourceTree = "<group>"; };
 		19AF25712CA180E8002B4355 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		19AF258A2CA339F9002B4355 /* DBHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBHelper.swift; sourceTree = "<group>"; };
+		19AF258C2CA33A04002B4355 /* PillModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillModel.swift; sourceTree = "<group>"; };
+		19AF258F2CA33A97002B4355 /* LocationCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCalculator.swift; sourceTree = "<group>"; };
+		19AF25912CA33AAF002B4355 /* NaviationBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaviationBarController.swift; sourceTree = "<group>"; };
+		19AF25932CA33AC1002B4355 /* SubwaySearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwaySearchController.swift; sourceTree = "<group>"; };
 		19C9907F2C8709470049BA2C /* LoadJason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadJason.swift; sourceTree = "<group>"; };
 		19C990812C8709E10049BA2C /* LocationKeyBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationKeyBoard.swift; sourceTree = "<group>"; };
 		19C990832C870A100049BA2C /* SeoulPharmacy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SeoulPharmacy.json; sourceTree = "<group>"; };
@@ -145,6 +157,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19AF25992CA33E64002B4355 /* RealmSwift in Frameworks */,
+				19AF25972CA33E64002B4355 /* Realm in Frameworks */,
 				19D83E142C75B7A30034BE1F /* FirebaseAppCheck in Frameworks */,
 				19D83E182C75B7B20034BE1F /* FirebaseAuthCombine-Community in Frameworks */,
 				19D83E1E2C75B7C40034BE1F /* FirebaseStorage in Frameworks */,
@@ -183,6 +197,7 @@
 			children = (
 				193FC4662C75B4D300C03E29 /* AppDelegate.swift */,
 				193FC4682C75B4D300C03E29 /* SceneDelegate.swift */,
+				19AF258E2CA33A18002B4355 /* DataBase */,
 				195362C62C765DD40092BFB9 /* Custom */,
 				195362C12C765D050092BFB9 /* Home */,
 				195362C22C765D150092BFB9 /* Location */,
@@ -225,6 +240,9 @@
 				19AF25692CA17CE0002B4355 /* LocationManagerCustom.swift */,
 				19C9907F2C8709470049BA2C /* LoadJason.swift */,
 				19C990812C8709E10049BA2C /* LocationKeyBoard.swift */,
+				19AF258F2CA33A97002B4355 /* LocationCalculator.swift */,
+				19AF25912CA33AAF002B4355 /* NaviationBarController.swift */,
+				19AF25932CA33AC1002B4355 /* SubwaySearchController.swift */,
 				19C990832C870A100049BA2C /* SeoulPharmacy.json */,
 			);
 			path = Location;
@@ -300,6 +318,15 @@
 			path = Font;
 			sourceTree = "<group>";
 		};
+		19AF258E2CA33A18002B4355 /* DataBase */ = {
+			isa = PBXGroup;
+			children = (
+				19AF258A2CA339F9002B4355 /* DBHelper.swift */,
+				19AF258C2CA33A04002B4355 /* PillModel.swift */,
+			);
+			path = DataBase;
+			sourceTree = "<group>";
+		};
 		19D83E0E2C75B79B0034BE1F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -334,6 +361,8 @@
 				19D83E1B2C75B7BE0034BE1F /* FirebaseFirestore */,
 				19D83E1D2C75B7C40034BE1F /* FirebaseStorage */,
 				195362F82C76EFF20092BFB9 /* FirebaseFirestoreCombine-Community */,
+				19AF25962CA33E64002B4355 /* Realm */,
+				19AF25982CA33E64002B4355 /* RealmSwift */,
 			);
 			productName = Pillter;
 			productReference = 193FC4632C75B4D300C03E29 /* Pillter.app */;
@@ -366,6 +395,7 @@
 			packageReferences = (
 				193FC48A2C75B56500C03E29 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				193FC48B2C75B57100C03E29 /* XCRemoteSwiftPackageReference "generative-ai-swift" */,
+				19AF25952CA33E64002B4355 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 193FC4642C75B4D300C03E29 /* Products */;
 			projectDirPath = "";
@@ -414,6 +444,7 @@
 			files = (
 				19F6DE702C75BD850074B6A7 /* ChatView.swift in Sources */,
 				19CCBB812CA15DBD00659935 /* PharmacyViewController.swift in Sources */,
+				19AF258D2CA33A04002B4355 /* PillModel.swift in Sources */,
 				19F6DE602C75BCD90074B6A7 /* LocationController.swift in Sources */,
 				19F6DE5E2C75BC3E0074B6A7 /* ChatFinalController.swift in Sources */,
 				19F6DE562C75BBE30074B6A7 /* MyPageController.swift in Sources */,
@@ -426,6 +457,7 @@
 				192ECD172C94855F00414587 /* SetAuthorization.swift in Sources */,
 				19AF256C2CA17D48002B4355 /* AlarmView.swift in Sources */,
 				193FC4672C75B4D300C03E29 /* AppDelegate.swift in Sources */,
+				19AF25922CA33AAF002B4355 /* NaviationBarController.swift in Sources */,
 				19F6DE5C2C75BC2A0074B6A7 /* UIColor.swift in Sources */,
 				19F6DE6A2C75BD620074B6A7 /* ChatBubble.swift in Sources */,
 				19C990822C8709E10049BA2C /* LocationKeyBoard.swift in Sources */,
@@ -433,6 +465,7 @@
 				19AF256A2CA17CE0002B4355 /* LocationManagerCustom.swift in Sources */,
 				19C990802C8709470049BA2C /* LoadJason.swift in Sources */,
 				195362C02C7653F00092BFB9 /* PillInfoViewController.swift in Sources */,
+				19AF25902CA33A97002B4355 /* LocationCalculator.swift in Sources */,
 				19F6DE662C75BD470074B6A7 /* APIKey.swift in Sources */,
 				19F6DE4F2C75BAE30074B6A7 /* CustomTabBarController.swift in Sources */,
 				19AF25702CA17D7C002B4355 /* MyPageTableView.swift in Sources */,
@@ -440,11 +473,13 @@
 				19F6DE6C2C75BD700074B6A7 /* ChatBubbleShape.swift in Sources */,
 				19CCBB7F2CA15D9E00659935 /* ZoomController.swift in Sources */,
 				19AF25642CA17C3F002B4355 /* LoadPillJson.swift in Sources */,
+				19AF25942CA33AC1002B4355 /* SubwaySearchController.swift in Sources */,
 				195362CA2C7698F80092BFB9 /* UIImage+GIF.swift in Sources */,
 				19CCBB7D2CA15D8600659935 /* SearchViewController.swift in Sources */,
 				19AF256E2CA17D60002B4355 /* AlarmDetailViewController.swift in Sources */,
 				19AF25662CA17C78002B4355 /* PillsInfo.swift in Sources */,
 				19F6DE5A2C75BC180074B6A7 /* AddMedViewControllerDelegate.swift in Sources */,
+				19AF258B2CA339F9002B4355 /* DBHelper.swift in Sources */,
 				192ECD152C94853700414587 /* PharmacyStruct.swift in Sources */,
 				19F6DE642C75BD300074B6A7 /* ChatExplainController.swift in Sources */,
 				19F6DE682C75BD580074B6A7 /* Chat.swift in Sources */,
@@ -691,6 +726,14 @@
 				minimumVersion = 0.5.5;
 			};
 		};
+		19AF25952CA33E64002B4355 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.33.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -703,6 +746,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 193FC48A2C75B56500C03E29 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseFirestoreCombine-Community";
+		};
+		19AF25962CA33E64002B4355 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 19AF25952CA33E64002B4355 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		19AF25982CA33E64002B4355 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 19AF25952CA33E64002B4355 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		19D83E0F2C75B79B0034BE1F /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;

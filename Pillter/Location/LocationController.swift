@@ -1,142 +1,205 @@
-
-
-import UIKit
 import MapKit
 import CoreLocation
 
 class LocationController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
-    let locationManager = CLLocationManager()
-    var mapView: MKMapView!
-    var zoomController: ZoomController!
+    let locationManager = CLLocationManager() // 위치 관리자
+    var mapView: MKMapView! // 지도 뷰
+    var userMovedMap = false // 사용자가 지도를 움직였는지 추적하는 변수
+    let navigationBarController = NavigationBarController()
+    var searchViewController: SearchViewController!
     var pharmacyViewController: PharmacyViewController!
-    var pharmacies: [MKMapItem] = [] // 약국 정보를 저장하는 배열
+    let subwaySearchController = SubwaySearchController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // 네비게이션 바 설정
+        navigationBarController.setupNavigationBarTitleView(for: self.navigationItem)
+        navigationBarController.setupNavigationBarAppearance(for: self.navigationController)
+        
         // 지도 설정
-        mapView = MKMapView()
+        mapView = MKMapView(frame: view.bounds)
         mapView.delegate = self
-        mapView.showsUserLocation = true
+        mapView.showsUserLocation = true // 사용자 위치 표시
+        mapView.userTrackingMode = .followWithHeading // 사용자의 방향을 추적
+        mapView.isScrollEnabled = true
+        mapView.isZoomEnabled = true
+        mapView.isPitchEnabled = true
+        mapView.isRotateEnabled = true
+        mapView.showsCompass = false // 커스텀 나침반을 사용하기 위해 내장 나침반 비활성화
+        
         view.addSubview(mapView)
         
-        // 위치 권한 요청 및 시작
+        // 검색창, 약국 정보, 나침반 및 위치 버튼 추가
+        setupSearchViewController()
+        setupPharmacyViewController()
+        setupCompassAndLocationButtons() // 나침반과 위치 버튼 추가
+        
+        // 위치 권한 요청 및 위치 업데이트 시작
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        
-        // 줌 컨트롤러 추가
-        setupZoomController()
-        
-        // 검색창 화면을 추가
-        setupSearchViewController()
-        
-        // 약국 정보 화면 추가
-        setupPharmacyViewController()
-        
-        // Auto Layout 설정
-        setupMapViewConstraints()
+        locationManager.startUpdatingLocation() // 위치 업데이트 시작
+        locationManager.startUpdatingHeading() // 방향 업데이트 시작
     }
     
-    // 지도 뷰의 Auto Layout 설정
-    func setupMapViewConstraints() {
-        mapView.translatesAutoresizingMaskIntoConstraints = false
+    // 약국 정보 표시를 위한 뷰 컨트롤러 설정
+    func setupPharmacyViewController() {
+        pharmacyViewController = PharmacyViewController()
+        addChild(pharmacyViewController)
+        view.addSubview(pharmacyViewController.view)
+        pharmacyViewController.didMove(toParent: self)
+        
+        // 약국 정보를 표시할 하단 뷰 설정
+        pharmacyViewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            mapView.topAnchor.constraint(equalTo: view.topAnchor),  // 부모 뷰의 상단에 맞춤
-            mapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            mapView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mapView.bottomAnchor.constraint(equalTo: view.bottomAnchor)  // 부모 뷰의 하단에 맞춤
+            pharmacyViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            pharmacyViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            pharmacyViewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            pharmacyViewController.view.heightAnchor.constraint(equalToConstant: 200)
         ])
+        view.bringSubviewToFront(pharmacyViewController.view)
     }
     
-    // 줌 컨트롤러 추가
-    func setupZoomController() {
-        zoomController = ZoomController()
-        
-        // 줌 변경 시 호출되는 클로저 설정
-        zoomController.onZoomChange = { [weak self] zoomLevel in
-            self?.zoomMap(to: zoomLevel)
-        }
-        
-        // 줌 컨트롤러를 자식 뷰로 추가
-        addChild(zoomController)
-        view.addSubview(zoomController.view)
-        zoomController.didMove(toParent: self)
-    }
-    
-    // 줌 기능 구현
-    func zoomMap(to zoomLevel: Double) {
-        if let location = locationManager.location {
-            let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: zoomLevel, longitudinalMeters: zoomLevel)
-            mapView.setRegion(region, animated: true)
-        }
-    }
-    
-    // 검색창 화면 추가 함수
+    // 검색창 뷰 컨트롤러 설정
     func setupSearchViewController() {
-        let searchViewController = SearchViewController()
+        searchViewController = SearchViewController()
         
-        // 검색어를 받아서 처리하는 클로저 설정
+        // 검색 기능 설정: 검색어를 지하철역으로 처리하고 검색 결과로 약국 찾기
         searchViewController.onSearch = { [weak self] query in
-            self?.searchForLocations(query: query)
+            self?.subwaySearchController.searchForSubwayStation(query: query, mapView: self!.mapView) { coordinate in
+                if let coordinate = coordinate {
+                    self?.searchForPharmacies(at: coordinate)
+                }
+            }
         }
         
-        // 검색창을 하위 뷰로 추가
         addChild(searchViewController)
         view.addSubview(searchViewController.view)
         searchViewController.didMove(toParent: self)
         
-        // Auto Layout 설정
+        // 검색창 레이아웃 설정
+        searchViewController.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            searchViewController.view.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            searchViewController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             searchViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             searchViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             searchViewController.view.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
-
     
-    // 약국 정보 화면 추가
-    func setupPharmacyViewController() {
-        pharmacyViewController = PharmacyViewController()
+    // 나침반 및 위치 버튼 추가
+    func setupCompassAndLocationButtons() {
+        // 커스텀 나침반 버튼을 지도에서 직접 위치 설정
+        let compassButton = MKCompassButton(mapView: mapView)
+        compassButton.compassVisibility = .visible
+        view.addSubview(compassButton)
         
-        // 약국 데이터를 전달하는 등의 추가 작업 필요
-        addChild(pharmacyViewController)
-        view.addSubview(pharmacyViewController.view)
-        pharmacyViewController.didMove(toParent: self)
-        
-        // Auto Layout 설정 (하단에 더 아래로 고정)
-        pharmacyViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        // 나침반 버튼의 위치를 수동으로 설정
+        compassButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            pharmacyViewController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            pharmacyViewController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            pharmacyViewController.view.heightAnchor.constraint(equalToConstant: 280),
-            pharmacyViewController.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 43)
+            compassButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            compassButton.topAnchor.constraint(equalTo: searchViewController.view.bottomAnchor, constant: 8), // 검색창 바로 아래에 배치
+            compassButton.widthAnchor.constraint(equalToConstant: 50),
+            compassButton.heightAnchor.constraint(equalToConstant: 50)
+        ])
+        
+        // 위치 버튼 설정
+        let locationButton = UIButton(type: .custom)
+        if let locationImage = UIImage(systemName: "location.fill") {
+            locationButton.setImage(locationImage, for: .normal)
+        } else {
+            locationButton.setImage(UIImage(named: "location_icon"), for: .normal)
+        }
+        
+        // 위치 버튼 스타일 설정
+        locationButton.tintColor = .blue
+        locationButton.backgroundColor = UIColor.white
+        locationButton.layer.cornerRadius = 10
+        locationButton.layer.shadowColor = UIColor.black.cgColor
+        locationButton.layer.shadowOpacity = 0.3
+        locationButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        locationButton.layer.shadowRadius = 4
+        locationButton.addTarget(self, action: #selector(centerMapOnUserLocation), for: .touchUpInside)
+        view.addSubview(locationButton)
+        
+        // 위치 버튼 레이아웃 설정
+        locationButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            // 위치 버튼을 나침반 아래에 배치
+            locationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            locationButton.topAnchor.constraint(equalTo: compassButton.bottomAnchor, constant: 16),
+            locationButton.widthAnchor.constraint(equalToConstant: 50),
+            locationButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
+    // MKMapViewDelegate 메서드: 약국 핀을 클릭했을 때 처리
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let annotation = view.annotation as? MKPointAnnotation else { return }
+        
+        // 선택한 핀의 크기를 크게 설정
+        view.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        
+        // 선택된 약국에 해당하는 MKMapItem 찾기
+        if let selectedPharmacy = pharmacyViewController.pharmacies.first(where: { $0.placemark.coordinate.latitude == annotation.coordinate.latitude &&
+            $0.placemark.coordinate.longitude == annotation.coordinate.longitude }) {
+            
+            // 약국 뷰 컨트롤러에 선택된 약국을 전달
+            pharmacyViewController.highlightSelectedPharmacy(selectedPharmacy)
+        }
+    }
+    
+    // MKMapViewDelegate 메서드: 약국 핀을 선택 해제했을 때 처리
+    func mapView(_ mapView: MKMapView, didDeselect view: MKAnnotationView) {
+        // 핀의 크기를 원래대로 되돌림
+        view.transform = CGAffineTransform.identity
+    }
+    
+    // 현재 위치로 지도 중심 이동
+    @objc func centerMapOnUserLocation() {
+        if let location = locationManager.location {
+            let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
+            mapView.setRegion(region, animated: true)
+        }
+    }
+    
+    // 방향 업데이트 콜백
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        if let userLocationView = mapView.view(for: mapView.userLocation) as? MKAnnotationView {
+            // 사용자 방향에 따라 마커 회전
+            let rotation = CGFloat(newHeading.trueHeading / 180.0 * .pi)
+            userLocationView.transform = CGAffineTransform(rotationAngle: rotation)
+        }
+    }
     
     // 위치 업데이트 콜백
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last {
-            // latitudinalMeters와 longitudinalMeters 값을 현재 줌 레벨에 맞게 설정
-            let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
-            mapView.setRegion(region, animated: true)
-            
-            // 현재 위치를 기반으로 약국 검색 함수 호출
-            searchForPharmacies(location: location)
+            // 사용자가 지도를 움직이지 않았다면 현재 위치로 지도 업데이트
+            if !userMovedMap {
+                let region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
+                mapView.setRegion(region, animated: false)
+                searchForPharmacies(at: location.coordinate)
+            }
         }
     }
     
-    // 약국 검색 함수
-    func searchForPharmacies(location: CLLocation) {
+    // 지도가 움직일 때 호출되는 메서드
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        let centerCoordinate = mapView.centerCoordinate
+        searchForPharmacies(at: centerCoordinate)
+        userMovedMap = true
+    }
+    
+    // 위치 및 약국 검색 후 PharmacyViewController로 데이터 전달
+    func searchForPharmacies(at coordinate: CLLocationCoordinate2D) {
         let request = MKLocalSearch.Request()
         request.naturalLanguageQuery = "약국"
-        request.region = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: 1000, longitudinalMeters: 1000)
+        request.region = MKCoordinateRegion(center: coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
         
         let search = MKLocalSearch(request: request)
-        search.start { (response, error) in
+        search.start { [weak self] (response, error) in
             if let error = error {
                 print("검색 중 오류 발생: \(error.localizedDescription)")
                 return
@@ -147,105 +210,22 @@ class LocationController: UIViewController, CLLocationManagerDelegate, MKMapView
                 return
             }
             
-            // 지도에 있는 기존 핀 제거
-            self.mapView.removeAnnotations(self.mapView.annotations)
+            // 기존 약국 핀 제거
+            self?.mapView.removeAnnotations(self?.mapView.annotations ?? [])
             
-            // 가장 가까운 약국 정보를 PharmacyViewController에 전달
-            let nearestPharmacies = response.mapItems.sorted(by: { $0.placemark.location!.distance(from: location) < $1.placemark.location!.distance(from: location) })
-            
-            // PharmacyViewController에 약국 정보 전달
-            self.pharmacyViewController.updatePharmacyData(pharmacies: nearestPharmacies)
-            
-            // 가장 가까운 약국 지도에 표시
-            for item in nearestPharmacies {
-                let annotation = MKPointAnnotation()
-                annotation.title = item.name
-                annotation.coordinate = item.placemark.coordinate
-                self.mapView.addAnnotation(annotation)
-            }
-            
-            // 검색 결과를 저장
-            self.pharmacies = response.mapItems
-            
-            // 현재 보이는 영역의 약국들만 표시
-            self.displayVisiblePharmacies()
-        }
-    }
-    
-    // 검색어로 장소 검색
-    func searchForLocations(query: String) {
-        let request = MKLocalSearch.Request()
-        request.naturalLanguageQuery = query
-        request.region = mapView.region
-        
-        let search = MKLocalSearch(request: request)
-        search.start { (response, error) in
-            if let error = error {
-                print("검색 중 오류 발생: \(error.localizedDescription)")
-                return
-            }
-            
-            guard let response = response else {
-                print("검색 결과가 없습니다.")
-                return
-            }
-            
-            // 기존 핀 제거
-            self.mapView.removeAnnotations(self.mapView.annotations)
-            
-            // 검색된 위치를 지도에 핀으로 표시
+            // 검색된 약국 핀 추가
             for item in response.mapItems {
                 let annotation = MKPointAnnotation()
                 annotation.title = item.name
                 annotation.coordinate = item.placemark.coordinate
-                self.mapView.addAnnotation(annotation)
+                self?.mapView.addAnnotation(annotation)
+            }
+            
+            // 약국 정보를 PharmacyViewController에 업데이트
+            if let currentLocation = self?.locationManager.location {
+                self?.pharmacyViewController.updatePharmacyData(pharmacies: response.mapItems, currentLocation: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude))
             }
         }
     }
     
-    // 현재 지도에서 보이는 영역의 약국들만 필터링하여 표시
-    func displayVisiblePharmacies() {
-        let visibleRegion = mapView.region // 현재 보이는 지도 영역
-        
-        // 지도에서 보이는 영역 안에 있는 약국들 필터링
-        let visiblePharmacies = pharmacies.filter { pharmacy in
-            let pharmacyLocation = pharmacy.placemark.coordinate
-            return visibleRegion.contains(coordinate: pharmacyLocation)
-        }
-        
-        // 지도에서 기존 약국 핀 제거
-        mapView.removeAnnotations(mapView.annotations)
-        
-        // 필터링된 약국들만 지도에 표시
-        for pharmacy in visiblePharmacies {
-            let annotation = MKPointAnnotation()
-            annotation.title = pharmacy.name
-            annotation.coordinate = pharmacy.placemark.coordinate
-            mapView.addAnnotation(annotation)
-        }
-        
-        // PharmacyViewController에 약국 정보 업데이트
-        pharmacyViewController.updatePharmacyData(pharmacies: visiblePharmacies)
-    }
-    
-    // 지도 영역이 변경되었을 때 호출되는 델리게이트 메서드
-    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        displayVisiblePharmacies()
-    }
-    
-}
-
-// MKCoordinateRegion에 좌표를 포함하는지 확인하는 확장 함수
-extension MKCoordinateRegion {
-    func contains(coordinate: CLLocationCoordinate2D) -> Bool {
-        let northWest = CLLocationCoordinate2D(latitude: center.latitude + span.latitudeDelta / 2,
-                                               longitude: center.longitude - span.longitudeDelta / 2)
-        let southEast = CLLocationCoordinate2D(latitude: center.latitude - span.latitudeDelta / 2,
-                                               longitude: center.longitude + span.longitudeDelta / 2)
-        
-        return coordinate.latitude >= southEast.latitude &&
-               coordinate.latitude <= northWest.latitude &&
-               coordinate.longitude >= northWest.longitude &&
-               coordinate.longitude <= southEast.longitude
-    }
 }

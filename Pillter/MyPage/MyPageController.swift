@@ -6,11 +6,10 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MyPageController: UIViewController {
 
-    
-    let data = ["Item 1", "Item2", "Item3"]
     
     // UI 구성
     var titleLabel: UILabel =
@@ -27,6 +26,8 @@ class MyPageController: UIViewController {
     }()
 
     var tableView = UITableView()
+    var pillData: Results<PillModel>?
+    let realm = DBHelper.shared
 
     let emptyStateImageView = UIImageView()
     let emptyStateMessageLabel = UILabel()
@@ -41,18 +42,41 @@ class MyPageController: UIViewController {
             titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
         
-        
-
-        
-        setupUI()
-        
-        //setTableView()
+//        if ((pillData?.isEmpty) != nil) {
+//            setupUI()
+//        }
+//        else {
+//            setTableView()
+//            setupTableView() //테이블뷰 setup
+//            realm.readData()
+//            tableView.reloadData()
+//        }
+        setTableView()
         setupTableView() //테이블뷰 setup
+        realm.readData()
+        fetchDataFromRealm()
+        //tableView.reloadData()
+        
         //네비게이션바 애니메이션효과 추가
         setupNavigationBarTitleView()
         
+        // Long Press Gesture 추가
+        let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+        tableView.addGestureRecognizer(longPressGesture)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchDataFromRealm()
+        //tableView.reloadData()
+    }
+    
+    private func fetchDataFromRealm()
+    {
+        let realmInstance = try! Realm()
+        pillData = realmInstance.objects(PillModel.self)
+        tableView.reloadData()
+    }
     //네비게이션바 애니메이션 효과 기능 함수
     private func setupNavigationBarTitleView() {
         // "Pill List" 텍스트 설정
@@ -133,6 +157,33 @@ class MyPageController: UIViewController {
         tableView.reloadData()
         
 
+    }
+    
+    // Long Press를 처리하는 함수
+    @objc func handleLongPress(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        if gestureRecognizer.state == .began {
+            let touchPoint = gestureRecognizer.location(in: self.tableView)
+            if let indexPath = tableView.indexPathForRow(at: touchPoint) {
+                // 선택된 셀에 대한 PillModel 데이터를 가져옴
+                if let pill = pillData?[indexPath.row] {
+                    // 경고창을 띄워 사용자가 삭제 여부를 확인하도록 함
+                    let alert = UIAlertController(title: "삭제", message: "\(pill.pillName)을(를) 삭제하시겠습니까?", preferredStyle: .alert)
+                    let deleteAction = UIAlertAction(title: "삭제", style: .destructive) { _ in
+                        // Realm에서 데이터 삭제
+                        self.realm.deleteData(pill.id)
+                        self.fetchDataFromRealm() // 데이터 삭제 후 다시 가져옴
+                        //self.tableView.reloadData() // 테이블 뷰 갱신
+                        self.realm.readData()
+                    }
+                    let cancelAction = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+                    
+                    alert.addAction(deleteAction)
+                    alert.addAction(cancelAction)
+                    
+                    self.present(alert, animated: true, completion: nil)
+                }
+            }
+        }
     }
     
 }

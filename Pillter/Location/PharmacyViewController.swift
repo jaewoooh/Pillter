@@ -1,26 +1,25 @@
+
 import UIKit
 import MapKit
+import CoreLocation
 
 class PharmacyViewController: UIViewController {
     
-    // 약국 정보를 저장할 데이터 구조체
-    var pharmacies: [MKMapItem] = []  // MKMapItem 배열로 약국 정보를 저장
+    var pharmacies: [MKMapItem] = []
     var scrollView: UIScrollView!
+    var currentLocation: CLLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupPharmacyScrollView()  // 스크롤뷰 설정
+        setupPharmacyScrollView()
     }
     
-    // 하단 약국 정보 스크롤뷰 설정
     func setupPharmacyScrollView() {
-        // 스크롤 뷰 생성
         scrollView = UIScrollView()
         scrollView.showsHorizontalScrollIndicator = false
         view.addSubview(scrollView)
         
-        // 스크롤 뷰 제약 설정
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -30,16 +29,26 @@ class PharmacyViewController: UIViewController {
         ])
     }
     
-    // 약국 데이터를 업데이트하는 함수
-    func updatePharmacyData(pharmacies: [MKMapItem]) {
+    func updatePharmacyData(pharmacies: [MKMapItem], currentLocation: CLLocation) {
         self.pharmacies = pharmacies
+        self.currentLocation = currentLocation
         
-        // 스크롤 뷰에 약국 정보 추가
+        // 약국 데이터를 거리 기준으로 정렬
+        let sortedPharmacies = pharmacies.sorted {
+            let location1 = CLLocation(latitude: $0.placemark.coordinate.latitude, longitude: $0.placemark.coordinate.longitude)
+            let location2 = CLLocation(latitude: $1.placemark.coordinate.latitude, longitude: $1.placemark.coordinate.longitude)
+            return location1.distance(from: currentLocation) < location2.distance(from: currentLocation)
+        }
+        
+        // 기존 약국 정보 제거
+        for subview in scrollView.subviews {
+            subview.removeFromSuperview()
+        }
+        
         var previousView: UIView? = nil
         let contentView = UIView()
         scrollView.addSubview(contentView)
         
-        // 컨텐츠 뷰 제약 설정
         contentView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
@@ -49,8 +58,12 @@ class PharmacyViewController: UIViewController {
             contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
         ])
         
-        for pharmacy in pharmacies {
-            let pharmacyView = createPharmacyInfoView(pharmacyName: pharmacy.name ?? "Unknown", phoneNumber: pharmacy.phoneNumber ?? "N/A")
+        for pharmacy in sortedPharmacies {
+            let destinationLocation = CLLocation(latitude: pharmacy.placemark.coordinate.latitude,
+                                                 longitude: pharmacy.placemark.coordinate.longitude)
+            let distance = LocationCalculator.calculateDistance(from: currentLocation, to: destinationLocation)
+            let formattedDistance = LocationCalculator.formatDistance(distance)
+            let pharmacyView = createPharmacyInfoView(pharmacyName: pharmacy.name ?? "Unknown", phoneNumber: pharmacy.phoneNumber ?? "N/A", distance: formattedDistance)
             contentView.addSubview(pharmacyView)
             
             pharmacyView.translatesAutoresizingMaskIntoConstraints = false
@@ -64,7 +77,6 @@ class PharmacyViewController: UIViewController {
             } else {
                 pharmacyView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
             }
-            
             previousView = pharmacyView
         }
         
@@ -73,25 +85,82 @@ class PharmacyViewController: UIViewController {
         }
     }
     
-    // 개별 약국 정보 뷰 생성 함수
-    func createPharmacyInfoView(pharmacyName: String, phoneNumber: String) -> UIView {
+    func highlightSelectedPharmacy(_ selectedPharmacy: MKMapItem) {
+        guard let currentLocation = currentLocation else { return }
+        
+        // 선택한 약국을 맨 앞에 위치시키고, 나머지 약국은 거리순으로 정렬
+        let sortedPharmacies = pharmacies.filter { $0 != selectedPharmacy }.sorted {
+            let location1 = CLLocation(latitude: $0.placemark.coordinate.latitude, longitude: $0.placemark.coordinate.longitude)
+            let location2 = CLLocation(latitude: $1.placemark.coordinate.latitude, longitude: $1.placemark.coordinate.longitude)
+            return location1.distance(from: currentLocation) < location2.distance(from: currentLocation)
+        }
+        
+        // 선택한 약국을 맨 앞에 추가한 새로운 배열 생성
+        let updatedPharmacies = [selectedPharmacy] + sortedPharmacies
+        
+        // 스크롤 뷰 업데이트
+        updatePharmacyScrollView(with: updatedPharmacies)
+    }
+
+    private func updatePharmacyScrollView(with pharmacies: [MKMapItem]) {
+        // 스크롤 뷰 내용 제거
+        for subview in scrollView.subviews {
+            subview.removeFromSuperview()
+        }
+        
+        var previousView: UIView? = nil
+        let contentView = UIView()
+        scrollView.addSubview(contentView)
+        
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            contentView.heightAnchor.constraint(equalTo: scrollView.heightAnchor)
+        ])
+        
+        // 정렬된 약국들을 다시 스크롤 뷰에 추가
+        for pharmacy in pharmacies {
+            let destinationLocation = CLLocation(latitude: pharmacy.placemark.coordinate.latitude,
+                                                 longitude: pharmacy.placemark.coordinate.longitude)
+            let distance = LocationCalculator.calculateDistance(from: currentLocation!, to: destinationLocation)
+            let formattedDistance = LocationCalculator.formatDistance(distance)
+            let pharmacyView = createPharmacyInfoView(pharmacyName: pharmacy.name ?? "Unknown", phoneNumber: pharmacy.phoneNumber ?? "N/A", distance: formattedDistance)
+            contentView.addSubview(pharmacyView)
+            
+            pharmacyView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                pharmacyView.widthAnchor.constraint(equalToConstant: 200),
+                pharmacyView.heightAnchor.constraint(equalToConstant: 200)
+            ])
+            
+            
+            if let previous = previousView {
+                pharmacyView.leadingAnchor.constraint(equalTo: previous.trailingAnchor, constant: 16).isActive = true
+            } else {
+                pharmacyView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
+            }
+            previousView = pharmacyView
+        }
+        
+        if let lastView = previousView {
+            lastView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
+        }
+    }
+
+    
+    func createPharmacyInfoView(pharmacyName: String, phoneNumber: String, distance: String) -> UIView {
         let pharmacyView = UIView()
         pharmacyView.layer.backgroundColor = UIColor.white.cgColor
         pharmacyView.layer.cornerRadius = 12
         
-        // 그림자 효과 추가
-        pharmacyView.layer.shadowColor = UIColor.black.cgColor
-        pharmacyView.layer.shadowOpacity = 0.3
-        pharmacyView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        pharmacyView.layer.shadowRadius = 4
-        
-        // 약국 아이콘 추가
         let pharmacyIcon = UIImageView()
         pharmacyIcon.image = UIImage(named: "pharmacy")
         pharmacyIcon.contentMode = .scaleAspectFit
         pharmacyView.addSubview(pharmacyIcon)
         
-        // 약국 아이콘 제약 조건 설정
         pharmacyIcon.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             pharmacyIcon.topAnchor.constraint(equalTo: pharmacyView.topAnchor, constant: 20),
@@ -100,7 +169,6 @@ class PharmacyViewController: UIViewController {
             pharmacyIcon.heightAnchor.constraint(equalToConstant: 70)
         ])
         
-        // 약국 이름 레이블 추가
         let pharmacyNameLabel = UILabel()
         pharmacyNameLabel.text = pharmacyName
         pharmacyNameLabel.font = UIFont.boldSystemFont(ofSize: 16)
@@ -114,32 +182,41 @@ class PharmacyViewController: UIViewController {
             pharmacyNameLabel.centerXAnchor.constraint(equalTo: pharmacyView.centerXAnchor)
         ])
         
-        // 구분선 추가
+        let distanceLabel = UILabel()
+        distanceLabel.text = distance
+        distanceLabel.font = UIFont.systemFont(ofSize: 14)
+        distanceLabel.textColor = UIColor.gray
+        distanceLabel.textAlignment = .center
+        pharmacyView.addSubview(distanceLabel)
+        
+        distanceLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            distanceLabel.topAnchor.constraint(equalTo: pharmacyNameLabel.bottomAnchor, constant: 8),
+            distanceLabel.centerXAnchor.constraint(equalTo: pharmacyView.centerXAnchor)
+        ])
+        
         let separatorView = UIView()
         separatorView.layer.backgroundColor = UIColor(red: 0.943, green: 0.949, blue: 0.963, alpha: 1).cgColor
         pharmacyView.addSubview(separatorView)
         
         separatorView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            separatorView.topAnchor.constraint(equalTo: pharmacyNameLabel.bottomAnchor, constant: 16),
+            separatorView.topAnchor.constraint(equalTo: distanceLabel.bottomAnchor, constant: 16),
             separatorView.centerXAnchor.constraint(equalTo: pharmacyView.centerXAnchor),
             separatorView.widthAnchor.constraint(equalToConstant: 153),
-            separatorView.heightAnchor.constraint(equalToConstant: 1) // 구분선의 높이 설정
+            separatorView.heightAnchor.constraint(equalToConstant: 1)
         ])
         
-        // 전화기 아이콘 추가
         let phoneIcon = UIImageView(image: UIImage(systemName: "phone.fill"))
         phoneIcon.tintColor = .gray
         phoneIcon.contentMode = .scaleAspectFit
         
-        // 전화번호 레이블 추가
         let pharmacyPhoneLabel = UILabel()
         pharmacyPhoneLabel.text = phoneNumber
         pharmacyPhoneLabel.font = UIFont.systemFont(ofSize: 14)
         pharmacyPhoneLabel.textColor = UIColor.gray
         pharmacyPhoneLabel.textAlignment = .center
         
-        // 스택뷰에 전화기 아이콘과 전화번호 레이블 추가
         let phoneStackView = UIStackView(arrangedSubviews: [phoneIcon, pharmacyPhoneLabel])
         phoneStackView.axis = .horizontal
         phoneStackView.spacing = 8
@@ -152,7 +229,6 @@ class PharmacyViewController: UIViewController {
             phoneStackView.centerXAnchor.constraint(equalTo: pharmacyView.centerXAnchor)
         ])
         
-        // 전화기 아이콘 크기 제약 설정
         phoneIcon.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             phoneIcon.widthAnchor.constraint(equalToConstant: 20),
