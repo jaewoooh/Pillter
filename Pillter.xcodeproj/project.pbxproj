@@ -41,7 +41,6 @@
 		19AF256C2CA17D48002B4355 /* AlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF256B2CA17D48002B4355 /* AlarmView.swift */; };
 		19AF256E2CA17D60002B4355 /* AlarmDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF256D2CA17D60002B4355 /* AlarmDetailViewController.swift */; };
 		19AF25702CA17D7C002B4355 /* MyPageTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF256F2CA17D7C002B4355 /* MyPageTableView.swift */; };
-		19AF25722CA180E8002B4355 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19AF25712CA180E8002B4355 /* LaunchScreen.storyboard */; };
 		19AF258B2CA339F9002B4355 /* DBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF258A2CA339F9002B4355 /* DBHelper.swift */; };
 		19AF258D2CA33A04002B4355 /* PillModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF258C2CA33A04002B4355 /* PillModel.swift */; };
 		19AF25902CA33A97002B4355 /* LocationCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF258F2CA33A97002B4355 /* LocationCalculator.swift */; };
@@ -49,6 +48,7 @@
 		19AF25942CA33AC1002B4355 /* SubwaySearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AF25932CA33AC1002B4355 /* SubwaySearchController.swift */; };
 		19AF25972CA33E64002B4355 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 19AF25962CA33E64002B4355 /* Realm */; };
 		19AF25992CA33E64002B4355 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 19AF25982CA33E64002B4355 /* RealmSwift */; };
+		19AF259D2CA340DE002B4355 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19AF259C2CA340DE002B4355 /* Launch Screen.storyboard */; };
 		19C990802C8709470049BA2C /* LoadJason.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C9907F2C8709470049BA2C /* LoadJason.swift */; };
 		19C990822C8709E10049BA2C /* LocationKeyBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C990812C8709E10049BA2C /* LocationKeyBoard.swift */; };
 		19C990842C870A100049BA2C /* SeoulPharmacy.json in Resources */ = {isa = PBXBuildFile; fileRef = 19C990832C870A100049BA2C /* SeoulPharmacy.json */; };
@@ -119,12 +119,12 @@
 		19AF256B2CA17D48002B4355 /* AlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmView.swift; sourceTree = "<group>"; };
 		19AF256D2CA17D60002B4355 /* AlarmDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDetailViewController.swift; sourceTree = "<group>"; };
 		19AF256F2CA17D7C002B4355 /* MyPageTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageTableView.swift; sourceTree = "<group>"; };
-		19AF25712CA180E8002B4355 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		19AF258A2CA339F9002B4355 /* DBHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBHelper.swift; sourceTree = "<group>"; };
 		19AF258C2CA33A04002B4355 /* PillModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillModel.swift; sourceTree = "<group>"; };
 		19AF258F2CA33A97002B4355 /* LocationCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationCalculator.swift; sourceTree = "<group>"; };
 		19AF25912CA33AAF002B4355 /* NaviationBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaviationBarController.swift; sourceTree = "<group>"; };
 		19AF25932CA33AC1002B4355 /* SubwaySearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubwaySearchController.swift; sourceTree = "<group>"; };
+		19AF259C2CA340DE002B4355 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = "Launch Screen.storyboard"; path = "../../../../Downloads/Pillter2/Pillter/pillter/Launch Screen.storyboard"; sourceTree = "<group>"; };
 		19C9907F2C8709470049BA2C /* LoadJason.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadJason.swift; sourceTree = "<group>"; };
 		19C990812C8709E10049BA2C /* LocationKeyBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationKeyBoard.swift; sourceTree = "<group>"; };
 		19C990832C870A100049BA2C /* SeoulPharmacy.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = SeoulPharmacy.json; sourceTree = "<group>"; };
@@ -205,7 +205,7 @@
 				195362C42C765D600092BFB9 /* Alarm */,
 				195362C52C765DAC0092BFB9 /* MyPage */,
 				193FC46C2C75B4D300C03E29 /* Main.storyboard */,
-				19AF25712CA180E8002B4355 /* LaunchScreen.storyboard */,
+				19AF259C2CA340DE002B4355 /* Launch Screen.storyboard */,
 				193FC46F2C75B4D400C03E29 /* Assets.xcassets */,
 				193FC4742C75B4D400C03E29 /* Info.plist */,
 			);
@@ -417,6 +417,7 @@
 				195362F72C76DBCE0092BFB9 /* SUITE-Variable.ttf in Resources */,
 				195362EF2C76DAFA0092BFB9 /* SUITE-Regular.otf in Resources */,
 				195362F02C76DAFA0092BFB9 /* SUITE-SemiBold.otf in Resources */,
+				19AF259D2CA340DE002B4355 /* Launch Screen.storyboard in Resources */,
 				195362F32C76DAFA0092BFB9 /* SUITE-Light.otf in Resources */,
 				195362D52C76A3300092BFB9 /* SOYO Maple Bold.otf in Resources */,
 				195362D02C769A9C0092BFB9 /* Pill_anicon.gif in Resources */,
@@ -429,7 +430,6 @@
 				195362D92C76A61A0092BFB9 /* ConcertOne-Regular.ttf in Resources */,
 				195362F42C76DAFA0092BFB9 /* SUITE-ExtraBold.otf in Resources */,
 				195362F52C76DAFA0092BFB9 /* SUITE-Heavy.otf in Resources */,
-				19AF25722CA180E8002B4355 /* LaunchScreen.storyboard in Resources */,
 				195362F12C76DAFA0092BFB9 /* SUITE-Bold.otf in Resources */,
 				19C990842C870A100049BA2C /* SeoulPharmacy.json in Resources */,
 			);
@@ -635,7 +635,7 @@
 				INFOPLIST_KEY_NSLocationUsageDescription = "~를 사용하려면 위치를 허용해야합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "~를 사용하려면 위치를 허용해야합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -668,7 +668,7 @@
 				INFOPLIST_KEY_NSLocationUsageDescription = "~를 사용하려면 위치를 허용해야합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "~를 사용하려면 위치를 허용해야합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
