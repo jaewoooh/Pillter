@@ -81,7 +81,7 @@ class CustomTabBarController: UITabBarController {
         NSLayoutConstraint.activate([
             customTabBarView.widthAnchor.constraint(equalToConstant: 350), // 너비 조정
             customTabBarView.heightAnchor.constraint(equalToConstant: 48),
-            customTabBarView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20), // 좌우 여백 조정
+            customTabBarView.centerXAnchor.constraint(equalTo: view.centerXAnchor), // 중앙에 배치
             customTabBarView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -34) // 하단 간격 조정
         ])
 
@@ -200,3 +200,4 @@ class CustomTabBarController: UITabBarController {
         }
     }
 }
+
